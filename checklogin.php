@@ -29,6 +29,8 @@
 			header("location:admin.php");
 		if($_SESSION['user_type'] == 'C')
 			header("location:customer.php");
+		if($_SESSION['user_type'] == 'K')
+			header("location:agent.php");
 	}
 	else {
 		//redirect for error

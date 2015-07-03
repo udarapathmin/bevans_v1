@@ -138,7 +138,7 @@
                         <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="fa fa-envelope"></i></a>
                         <span class="pull-right">
                             <a href='<?php echo $baseurl . 'editadmin.php?id='. $row['id']; ?>' data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square-o"></i></a>
-                            <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger" href="formaction/deleteadmin_action.php" onclick="return confirm('Are you sure you want to permenantly delete this user?   you cannot recover this teacher profile after you delete');"><i class="fa fa-trash"></i></a>
+                            <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger" href="formaction/deleteadmin_action.php" onclick="return confirm('Are you sure you want to permenantly delete this user?   you cannot recover this profile after you delete');"><i class="fa fa-trash"></i></a>
                         </span>
                     </div>
             

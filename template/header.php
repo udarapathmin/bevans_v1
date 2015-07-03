@@ -38,6 +38,8 @@
                     $profilelink = "admin.php";
                   if($usertype == 'C')
                     $profilelink = "customer.php";
+                  if($usertype == 'K')
+                    $profilelink = "agent.php";
                   echo " ". $_SESSION["firstname"];
                   echo "<b class='caret'></b></a><ul class='dropdown-menu'>";
                   echo "<li><a href='$profilelink'>Profile</a></li>"; 

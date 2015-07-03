@@ -7,7 +7,7 @@
       header("location:login.php");
   }
   //check for Admin login
-  if($_SESSION['user_type'] != 'C'){
+  if($_SESSION['user_type'] != 'K'){
     header("location:index.php");
   }
 
@@ -19,7 +19,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Home</title>
+    <title>Agent</title>
 
     
 
@@ -54,10 +54,10 @@
 
     <div class="row">
       <div class="col-md-3">
-        <?php include "customer_sidebar.php"; ?>
+        <?php include "admin_sidebar.php"; ?>
       </div>
       <div class="col-md-9">
-          customer
+
       </div>
     </div>
       
