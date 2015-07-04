@@ -11,8 +11,8 @@
     </div>
     <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading1" aria-expanded="true">
         <ul class="list-group">
-          <li class="list-group-item"><a href="">View Profile</a></li>
-          <li class="list-group-item"><a href="">Edit Profile</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "viewcustomerprofile.php" ?>'>View Profile</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "editcustomerprofile.php" ?>'>Edit Profile</a></li>
           <li class="list-group-item"><a href="">Dissable Account</a></li>
         </ul>
       </div>

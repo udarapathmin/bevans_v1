@@ -2,30 +2,23 @@
 
   include "database.php";
 
-      //user id
-    $uid = $_GET["id"];
-
-    // Search for User
-    $sql= "SELECT * FROM users WHERE id='$uid' AND  user_type = 'A'";
-    $result = $conn->query($sql);
-    if ($result->num_rows == 0) {
-      header("location:admin.php");
-    }
-
-  if(!isset($_GET["id"])) {
-    header("location:admin.php");
-  }
-
-
+  $un = $_SESSION['username'];
   
   if (!isset($_SESSION['username']))
   {
       header("location:login.php");
   }
   //check for Admin login
-  if($_SESSION['user_type'] != 'A'){
+  if($_SESSION['user_type'] != 'C'){
     header("location:index.php");
   }
+
+  // Search for User
+    $sql= "SELECT * FROM customer WHERE username='$un'";
+    $result = $conn->query($sql);
+    if ($result->num_rows == 0) {
+      header("location:customer.php");
+    }
 
 ?>
 <!DOCTYPE html>
@@ -35,7 +28,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Edit Administrator Details</title>
+    <title>Customer</title>
 
     
 
@@ -70,27 +63,12 @@
 
     <div class="row">
       <div class="col-md-3">
-        <?php include "admin_sidebar.php"; ?>
+        <?php include "customer_sidebar.php"; ?>
       </div>
       <div class="col-md-9">
-      <!-- Messages -->
-      <!-- Password fail -->
-          <?php
-            if(isset($_GET["password"]) && $_GET["password"] == 'false' ) {
-              //if it is false display error
-               ?>
-
-              <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Error!</strong><?php echo ' Password didnt match.' ; ?> 
-              </div>
-
-            <?php
-            }
-           ?>
 
 
-      <!-- Success Edit Message -->
+                  <!-- Success Edit Message -->
           <?php
             if(isset($_GET["edit"]) && $_GET["edit"] == 'true' ) {
               //if it is false display error
@@ -98,7 +76,7 @@
 
               <div class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Success!</strong><?php echo ' Updated Admin record' ; ?> 
+                <strong>Success!</strong><?php echo ' Updated Customer Profile' ; ?> 
               </div>
 
             <?php
@@ -112,41 +90,35 @@
 
               <div class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Error!</strong><?php echo ' Failed to record' ; ?> 
+                <strong>Error!</strong><?php echo ' Failed to update record' ; ?> 
               </div>
 
             <?php
             }
            ?>
 
+           
 
-      <?php 
-
-              while($row = $result->fetch_assoc()) {
-
+              <?php 
+                while($row = $result->fetch_assoc()) {
+                // $_SESSION['deleteadminid'] = $row["id"];
               ?>
-
-        <div class="well">
+          
+          <div class="well">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#home" data-toggle="tab">Profile</a></li>
           <li><a href="#profile" data-toggle="tab">Password</a></li>
         </ul>
     <div id="myTabContent" class="tab-content">
       <div class="tab-pane active in" id="home">
-            <form style="margin-top:20px;" class="form-horizontal" action="formaction/editadmindetails_action.php" method="POST">
+            <form style="margin-top:20px;" class="form-horizontal" action="formaction/update_customerdetails_action.php" method="POST">
               <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="col-sm-2 control-label">ID</label>
-                    <div class="col-sm-10">
-                      <input  type="text" class="form-control" id="id" name="id" value='<?php echo $row["id"]; ?>'  placeholder="ID" >
-                    </div>
-                  </div>
-                  <div class="form-group">
                     <label class="col-sm-2 control-label">Username</label>
                     <div class="col-sm-10">
-                      <input  type="text" class="form-control" id="username" name="username" value='<?php echo $row["username"]; ?>'  placeholder="Username" >
+                      <input disabled   type="text" class="form-control" id="username" name="username" value='<?php echo $row["username"]; ?>'  placeholder="Username" >
                     </div>
                   </div>
 
@@ -160,16 +132,83 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label">First Name</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="firstname" value='<?php echo $row["first_name"]; ?>' name="firstname"   placeholder="First Name" >
+                      <input type="text" class="form-control" id="firstname" value='<?php echo $row["firstname"]; ?>' name="firstname"   placeholder="First Name" >
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Other Name</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="othername" value='<?php echo $row["othername"]; ?>' name="lastname"   placeholder="Other Name">
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label">Last Name</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="lastname" value='<?php echo $row["last_name"]; ?>' name="lastname"   placeholder="Last Name">
+                      <input type="text" required class="form-control" id="lastname" value='<?php echo $row["lastname"]; ?>' name="lastname"   placeholder="Last Name">
                     </div>
                   </div>
                   <hr>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Address No</label>
+                    <div class="col-sm-10">
+                      <input required type="text" class="form-control" id="addno" value='<?php echo $row["addno"]; ?>' name="addno"   placeholder="Last Name">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Street 1</label>
+                    <div class="col-sm-10">
+                      <input required type="text" class="form-control" id="addstreet1" value='<?php echo $row["addstreet1"]; ?>' name="addstreet1"   placeholder="Street 1">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Street 2</label>
+                    <div class="col-sm-10">
+                      <input required type="text" class="form-control" id="addstreet2" value='<?php echo $row["addstreet2"]; ?>' name="addstreet2"   placeholder="Street 2">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Suburb</label>
+                    <div class="col-sm-10">
+                      <input required type="text" class="form-control" id="addsuburb" value='<?php echo $row["addsuburb"]; ?>' name="addsuburb"   placeholder="Suburb">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">State</label>
+                    <div class="col-sm-10">
+                      <input required type="text" class="form-control" id="addstate" value='<?php echo $row["addstate"]; ?>' name="addstate"   placeholder="State">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Post Code</label>
+                    <div class="col-sm-10">
+                      <input required type="text" class="form-control" id="addpostcode" value='<?php echo $row["addpostcode"]; ?>' name="addpostcode"   placeholder="Post Code">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Phone Mobile</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="phonemobile" value='<?php echo $row["phonemobile"]; ?>' name="phonemobile"   placeholder="Phone Mobile">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Phone Home</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="phonehome" value='<?php echo $row["phonehome"]; ?>' name="phonehome"   placeholder="Phone Home">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Phone Work</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="phonework" value='<?php echo $row["phonework"]; ?>' name="phonework"   placeholder="Phone Work">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Fax</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="phonefax" value='<?php echo $row["phonefax"]; ?>' name="phonefax"   placeholder="Fax">
+                    </div>
+                  </div>
 
                   <!-- Submit Button -->
                   <div class="form-group">
@@ -223,17 +262,16 @@
 
       </div>
 
-      <?php
+    <?php
       }
     ?>
-
-      <!-- End of middle column -->
+      </div>
     </div>
       
 
       <!-- End of container -->
     </div>
-</div>
+
     <!-- footer -->
     <?php include "template/footer.php"; ?>
 </body>
