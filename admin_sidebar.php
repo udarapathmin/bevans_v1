@@ -29,8 +29,8 @@
         <ul class="list-group">
           <li class="list-group-item"><a href='<?php echo $baseurl . "addadmin.php" ?>'>Add Admin</a></li>
           <li class="list-group-item"><a href='<?php echo $baseurl . "listadmin.php" ?>'>List Admins</a></li>
-          <li class="list-group-item"><a href="">Add Agent</a></li>
-          <li class="list-group-item"><a href="">List Agent</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "pendingagents.php" ?>'>Pending Agent</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "listagents.php" ?>'>List Agent</a></li>
         </ul>
     </div>
   </div>

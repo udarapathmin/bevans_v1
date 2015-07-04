@@ -9,7 +9,7 @@
 	$lastname = $_POST['lastname']; 
 
 	//Update Admin Statement
-	$sql = "UPDATE users SET first_name='$lastname', last_name='$firstname', email='$email' WHERE id=$id ";
+	$sql = "UPDATE users SET first_name='$firstname', last_name='$lastname', email='$email' WHERE id=$id ";
 
 	if ($conn->query($sql) === TRUE) {
 		die(header("location:../editadmin.php?edit=true&id=$id"));

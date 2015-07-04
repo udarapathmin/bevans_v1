@@ -47,7 +47,7 @@
       <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-11">
-          <h3><strong>Customer Registration</strong></h3><hr>
+          <h3><strong>Registration</strong></h3><hr>
           <?php
             //checks of login status
             if(isset($_GET["password"]) || isset($_GET["username"]) || isset($_GET["telephone"])) {
@@ -126,7 +126,16 @@
                     <input type="number" class="form-control" id="phone" name="phone"  placeholder="Mobile Phone" maxlength="13" size="13" >
                   </div>
                 </div>
-                
+                <div class="form-group">
+                <label class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="agent" name="agent" value="true"> I am an Agent
+                  </label>
+                </div></div>
+                </div>
+                              
 
                 <!-- Submit Button -->
                 <div class="form-group">

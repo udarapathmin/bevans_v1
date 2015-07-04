@@ -2,30 +2,23 @@
 
   include "database.php";
 
-    //user id
-    $uid = $_GET["id"];
-
-    // Search for User
-    $sql= "SELECT * FROM users WHERE id='$uid' AND  user_type = 'A'";
-    $result = $conn->query($sql);
-    if ($result->num_rows == 0) {
-      header("location:admin.php");
-    }
-
-  if(!isset($_GET["id"])) {
-    header("location:admin.php");
-  }
-
-  include "database.php";
-  
+  $un = $_SESSION['username'];
+ 
   if (!isset($_SESSION['username']))
   {
       header("location:login.php");
   }
   //check for Admin login
-  if($_SESSION['user_type'] != 'A'){
+  if($_SESSION['user_type'] != 'C'){
     header("location:index.php");
   }
+
+    // Search for User
+    $sql= "SELECT * FROM customer WHERE username='$un'";
+    $result = $conn->query($sql);
+    if ($result->num_rows == 0) {
+      header("location:customer.php");
+    }
 
 ?>
 <!DOCTYPE html>
@@ -35,7 +28,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>View Admin Profile</title>
+    <title>View Customer Profile</title>
 
     
 
@@ -70,18 +63,22 @@
 
     <div class="row">
       <div class="col-md-3">
-        <?php include "admin_sidebar.php"; ?>
+        <?php include "customer_sidebar.php"; ?>
       </div>
       <div class="col-md-9">
 
-          <!-- Delete Fail Message -->
-           <?php
-            if(isset($_GET["delete"]) && $_GET["delete"] == 'false' ) {
-              //if it is false display error ?>
+              <?php 
+                while($row = $result->fetch_assoc()) {
+                // $_SESSION['deleteadminid'] = $row["id"];
+              ?>
 
-              <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Error!</strong><?php echo ' Failed to delete the record' ; ?> 
+
+          <?php
+            if( $row["iscomplete"] == '0') {
+              //if it is display message to complete profile ?>
+
+              <div class="alert alert-info alert-dismissible" role="alert">
+                <strong>Notice!</strong>Your Profile is incomplete. Please complete your profile by editing <strong><a href='<?php echo $baseurl . "editcustomerprofile.php" ?>'>here</a></strong>.
               </div>
 
             <?php
@@ -89,15 +86,10 @@
            ?>
 
 
-            <div class="panel panel-info">
-            <?php 
-
-              while($row = $result->fetch_assoc()) {
-
-                $_SESSION['deleteadminid'] = $row["id"];
-              ?>
+          <div class="panel panel-info">
+            
             <div class="panel-heading">
-              <h3 class="panel-title"><?php echo $row["first_name"] . ' ' . $row["last_name"] ; ?></h3>
+              <h3 class="panel-title"><?php echo $row["firstname"] . ' ' . $row["lastname"] ; ?></h3>
             </div>
             <div class="panel-body">
               <div class="row">
@@ -107,20 +99,32 @@
                   <table class="table table-user-information">
                     <tbody>
                       <tr>
-                        <td>ID:</td>
-                        <td><?php echo $row["id"]; ?></td>
-                      </tr>
-                      <tr>
                         <td>Username:</td>
                         <td><?php echo $row["username"]; ?></td>
                       </tr>
                       <tr>
                         <td>First Name</td>
-                        <td><?php echo $row["first_name"]; ?></td>
+                        <td><?php echo $row["firstname"]; ?></td>
                       </tr>
-                        <tr>
+                      <tr>
                         <td>Last Name</td>
-                        <td><?php echo $row["last_name"]; ?></td>
+                        <td><?php echo $row["lastname"]; ?></td>
+                      </tr>
+                      <tr>
+                        <td>Gender</td>
+                        <td><?php echo $row["gender"]; ?></td>
+                      </tr>
+                      <tr>
+                        <td>Address</td>
+                        <td><?php echo $row["addno"]; ?></td>
+                      </tr>
+                      <tr>
+                        <td>Mobile Phone</td>
+                        <td><?php echo $row["phonemobile"]; ?></td>
+                      </tr>
+                      <tr>
+                        <td>Fax</td>
+                        <td><?php echo $row["phonefax"]; ?></td>
                       </tr>
                       <tr>
                         <td>Email</td>
@@ -134,13 +138,6 @@
                 </div>
               </div>
             </div>
-                 <div class="panel-footer">
-                        <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="fa fa-envelope"></i></a>
-                        <span class="pull-right">
-                            <a href='<?php echo $baseurl . 'editadmin.php?id='. $row['id']; ?>' data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square-o"></i></a>
-                            <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger" href="formaction/deleteadmin_action.php" onclick="return confirm('Are you sure you want to permenantly delete this user?   you cannot recover this profile after you delete');"><i class="fa fa-trash"></i></a>
-                        </span>
-                    </div>
             
             <?php
           
@@ -148,17 +145,12 @@
 
             ?>  
           </div>
-
       </div>
     </div>
       
 
       <!-- End of container -->
     </div>
-
-
-
-
 
     <!-- footer -->
     <?php include "template/footer.php"; ?>
