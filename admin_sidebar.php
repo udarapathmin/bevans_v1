@@ -11,9 +11,11 @@
     </div>
     <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading1" aria-expanded="true">
         <ul class="list-group">
-          <li class="list-group-item"><a href="">Add Property</a></li>
-          <li class="list-group-item"><a href="">List Property</a></li>
-          <li class="list-group-item"><a href="">Add Feature</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "addproperty.php" ?>'>Add Property</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "listproperty.php" ?>'>Assign Property</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "addfeature.php" ?>'>Add Feature</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "addpropertytype.php" ?>'>Add Property Type</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "listallproperty.php" ?>'>List Property</a></li>
         </ul>
       </div>
   </div>

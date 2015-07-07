@@ -7,9 +7,13 @@
       header("location:login.php");
   }
   //check for Admin login
-  if($_SESSION['user_type'] != 'K'){
+  if($_SESSION['user_type'] != 'C'){
     header("location:index.php");
   }
+
+  //property id
+  $propertyid = $_GET["id"];
+
 
 ?>
 <!DOCTYPE html>
@@ -19,7 +23,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Agent</title>
+    <title>Submit Tenant Application</title>
 
     
 
@@ -54,10 +58,13 @@
 
     <div class="row">
       <div class="col-md-3">
-        <?php include "agent_sidebar.php"; ?>
+        <?php include "customer_sidebar.php"; ?>
       </div>
       <div class="col-md-9">
-
+          <form action="action_page.php">
+            <input type="datetime" name="usr_time">
+            <input type="submit">
+          </form>
       </div>
     </div>
       

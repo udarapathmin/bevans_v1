@@ -79,32 +79,32 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Username</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="username" name="username"  placeholder="Username" >
+                    <input required type="text" class="form-control" id="username" name="username"  placeholder="Username" >
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Password</label>
                   <div class="col-sm-10">
-                    <input type="password" class="form-control" id="password" name="password"  placeholder="Password" >
+                    <input required type="password" class="form-control" id="password" name="password"  placeholder="Password" >
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Confirm Password</label>
                   <div class="col-sm-10">
-                    <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Confirm Password" >
+                    <input required type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Confirm Password" >
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Email</label>
                   <div class="col-sm-10">
-                    <input type="email" class="form-control" id="email" name="email"  placeholder="Email" >
+                    <input required type="email" class="form-control" id="email" name="email"  placeholder="Email" >
                   </div>
                 </div>
                 <hr>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">First Name</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="firstname" name="firstname"   placeholder="First Name" >
+                    <input required type="text" class="form-control" id="firstname" name="firstname"   placeholder="First Name" >
                   </div>
                 </div>
                 <div class="form-group">
@@ -123,7 +123,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Phone</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" id="phone" name="phone"  placeholder="Mobile Phone" maxlength="13" size="13" >
+                    <input required type="number" class="form-control" id="phone" name="phone"  placeholder="Mobile Phone" maxlength="13" size="13" >
                   </div>
                 </div>
                 <div class="form-group">

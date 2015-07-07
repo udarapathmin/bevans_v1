@@ -1,5 +1,5 @@
 <div id="footer">
       <div class="container">
-        <p class="footer-block">&copy Copyrigh Reserved by Bevens, 2015</p>  
+        <p class="footer-block">&copy Copyright Reserved by Bevens, 2015</p>  
       </div>
  </div>

@@ -5,15 +5,14 @@
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          <i class="fa fa-user"></i> Profile Management
+          <i class="fa fa-building-o"></i> Property Management
         </a>
       </h4>
     </div>
     <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading1" aria-expanded="true">
         <ul class="list-group">
-          <li class="list-group-item"><a href='<?php echo $baseurl . "viewcustomerprofile.php" ?>'>View Profile</a></li>
-          <li class="list-group-item"><a href='<?php echo $baseurl . "editcustomerprofile.php" ?>'>Edit Profile</a></li>
-          <li class="list-group-item"><a href='<?php echo $baseurl . "dissablecustomer.php" ?>'>Dissable Account</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "listagentproperty.php" ?>'>My Property</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . ".php" ?>'>Tenant Applications</a></li>
         </ul>
       </div>
   </div>
@@ -21,15 +20,14 @@
     <div class="panel-heading" role="tab" id="headingTwo">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          <i class="fa fa-search"></i> Search
+          <i class="fa fa-user"></i> My Profile
         </a>
       </h4>
     </div>
     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
         <ul class="list-group">
-          <li class="list-group-item"><a href='<?php echo $baseurl . "advancesearch.php" ?>'>Advance Search</a></li>
-          <li class="list-group-item"><a href='<?php echo $baseurl . ".php" ?>'>Search</a></li>
-          <li class="list-group-item"><a href='<?php echo $baseurl . "savedsearch.php" ?>'>Saved Search</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "viewagent.php" ?>'>View Profile</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "editagent.php" ?>'>Edit Profile</a></li>
         </ul>
     </div>
   </div>
@@ -44,7 +42,7 @@
     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
        <ul class="list-group">
           <li class="list-group-item"><a href='<?php echo $baseurl . "addadmin.php" ?>'>Request Alerts</a></li>
-          <li class="list-group-item"><a href='<?php echo $baseurl . "scheduleds.php" ?>'>Scheduled Inspections</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "scheduleapplications.php" ?>'>Schedule Inspection</a></li>
         </ul>
     </div>
   </div>

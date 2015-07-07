@@ -9,15 +9,15 @@
       header("location:login.php");
   }
   //check for Admin login
-  if($_SESSION['user_type'] != 'C'){
+  if($_SESSION['user_type'] != 'K'){
     header("location:index.php");
   }
 
   // Search for User
-    $sql= "SELECT * FROM customer WHERE username='$un'";
+    $sql= "SELECT * FROM agent WHERE username='$un'";
     $result = $conn->query($sql);
     if ($result->num_rows == 0) {
-      header("location:customer.php");
+      header("location:agent.php");
     }
 
 ?>
@@ -28,7 +28,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Edit Customer Profile</title>
+    <title>Edit Agent Profile</title>
 
     
 
@@ -63,7 +63,7 @@
 
     <div class="row">
       <div class="col-md-3">
-        <?php include "customer_sidebar.php"; ?>
+        <?php include "agent_sidebar.php"; ?>
       </div>
       <div class="col-md-9">
 
@@ -76,7 +76,7 @@
 
               <div class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Success!</strong><?php echo ' Updated Customer Profile' ; ?> 
+                <strong>Success!</strong><?php echo ' Updated Agent Profile' ; ?> 
               </div>
 
             <?php
@@ -97,7 +97,7 @@
             }
            ?>
 
-           <!-- Fail Edit Message -->
+            <!-- Fail Edit Message -->
           <?php
             if(isset($_GET["password"]) && $_GET["password"] == 'false' ) {
               //if it is false display error
@@ -126,7 +126,7 @@
         </ul>
     <div id="myTabContent" class="tab-content">
       <div class="tab-pane active in" id="home">
-            <form style="margin-top:20px;" class="form-horizontal" action="formaction/update_customerdetails_action.php" method="POST">
+            <form style="margin-top:20px;" class="form-horizontal" action="formaction/update_agentdetails_action.php" method="POST">
               <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-6">
@@ -173,39 +173,9 @@
                   </div>
                   <hr>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label">Address No</label>
+                    <label class="col-sm-2 control-label">Date of Birth</label>
                     <div class="col-sm-10">
-                      <input required type="text" class="form-control" id="addno" value='<?php echo $row["addno"]; ?>' name="addno"   placeholder="Last Name">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Street 1</label>
-                    <div class="col-sm-10">
-                      <input required type="text" class="form-control" id="addstreet1" value='<?php echo $row["addstreet1"]; ?>' name="addstreet1"   placeholder="Street 1">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Street 2</label>
-                    <div class="col-sm-10">
-                      <input required type="text" class="form-control" id="addstreet2" value='<?php echo $row["addstreet2"]; ?>' name="addstreet2"   placeholder="Street 2">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Suburb</label>
-                    <div class="col-sm-10">
-                      <input required type="text" class="form-control" id="addsuburb" value='<?php echo $row["addsuburb"]; ?>' name="addsuburb"   placeholder="Suburb">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">State</label>
-                    <div class="col-sm-10">
-                      <input required type="text" class="form-control" id="addstate" value='<?php echo $row["addstate"]; ?>' name="addstate"   placeholder="State">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Post Code</label>
-                    <div class="col-sm-10">
-                      <input required type="text" class="form-control" id="addpostcode" value='<?php echo $row["addpostcode"]; ?>' name="addpostcode"   placeholder="Post Code">
+                      <input type="date" required class="form-control" id="dob" value='<?php echo $row["dob"]; ?>' name="dob"   placeholder="Date of Birth">
                     </div>
                   </div>
                   <hr>
@@ -213,12 +183,6 @@
                     <label class="col-sm-2 control-label">Phone Mobile</label>
                     <div class="col-sm-10">
                       <input type="text" required class="form-control" id="phonemobile" value='<?php echo $row["phonemobile"]; ?>' name="phonemobile"   placeholder="Phone Mobile">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Phone Home</label>
-                    <div class="col-sm-10">
-                      <input type="text"  class="form-control" id="phonehome" value='<?php echo $row["phonehome"]; ?>' name="phonehome"   placeholder="Phone Home">
                     </div>
                   </div>
                   <div class="form-group">
@@ -248,7 +212,7 @@
             </form>
       </div>
       <div class="tab-pane fade" id="profile">
-        <form style="margin-top:20px;" class="form-horizontal" action="formaction/update_customerpass_action.php" method="POST">
+        <form style="margin-top:20px;" class="form-horizontal" action="formaction/update_agentpass_action.php" method="POST">
           <div class="row">
           <div class="col-md-2"></div>
             <div class="col-md-6">

@@ -43,6 +43,20 @@
 
     <!-- Begin page content -->
     <div class="container">
+          <!-- Success Edit Message -->
+          <?php
+            if(isset($_GET["delete"]) && $_GET["delete"] == 'true' ) {
+              //if it is false display error
+               ?>
+
+              <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Success!</strong><?php echo ' Deleted Customer record' ; ?> 
+              </div>
+
+            <?php
+            }
+           ?>
       <div class="row">
         <div class="col-md-9">
           <div class="panel panel-default">
