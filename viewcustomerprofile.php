@@ -12,7 +12,7 @@
   if($_SESSION['user_type'] != 'C'){
     header("location:index.php");
   }
-
+  
     // Search for User
     $sql= "SELECT * FROM customer WHERE username='$un'";
     $result = $conn->query($sql);

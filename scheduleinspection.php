@@ -40,6 +40,10 @@
   $propertyid = $_GET["id"];
   $agentid = $_GET["agid"];
 
+  //Getting Customer ID for agent
+  if(isset( $_GET["cid"]))
+    $cusid = $_GET["cid"];
+
   // Search for House
   $sql= "SELECT * FROM realestateproperty WHERE propertyid='$propertyid'";
   $result = $conn->query($sql);
@@ -292,7 +296,10 @@
                   <?php 
                     } else { 
                       //Display Schedule data
-                        while($sche = mysqli_fetch_array($results)){ ?>
+                        while($sche = mysqli_fetch_array($results)){ 
+                          $_SESSION['deleteschedule'] = $sche['id'];
+
+                          ?>
 
                         <h4>Schedule Inspection Details</h4>
                         <div class="row">
@@ -316,7 +323,7 @@
                             } else if($sche['agentreply'] == '1'){
                               echo "<td><span class='label label-success'>Approved</span></td>". PHP_EOL;
                             } else{
-                              echo "<td><span class='label label-danger'>Rejected</span></td>". PHP_EOL;
+                              echo "<span class='label label-danger'>Rejected</span>". PHP_EOL;
                             } 
                           ?>
                           </div>
@@ -325,14 +332,24 @@
                           <div class="col-md-2"><b>Time - </b></div>
                           <div class="col-md-4">
                           <?php 
-                            if(!isset($row['time'])){
+                            if(!isset($sche['time'])){
                               echo "<td><span class='label label-primary'>Waitng</span></td>" . PHP_EOL;
                             } else {
-                              echo "<td>".$row['time']."</td>" . PHP_EOL;
+                              echo "<td>".$sche['time']."</td>" . PHP_EOL;
                             } 
                           ?>
                           </div>
                         </div>
+
+                        <!-- if Rejected Schedule -->
+                        <?php if($sche['agentreply'] == '2'){ ?>
+                        <div class="row" style="margin-top:10px;">
+                          <div class="col-md-6">
+                            <div class="alert alert-info" role="alert">Agent Rejected this. You may reschedule it <a href="<?php echo $baseurl;?>formaction/remove_schedule.php<?php echo '?id='.$sche['propertyid']. '&agid='.$sche['agentid'] ?>"<b>here</b></a></div>
+                          </div>
+                        </div>
+                        <?php } ?>
+                        <!-- end of if -->
 
                     <?php
                       }
@@ -346,8 +363,53 @@
               <!-- Div for Agent.. -->
               <?php 
                 if($utype == 'K') { 
-                  
-                }
+
+                  $sqli="SELECT * FROM customer_scheduleinspection WHERE customerid = '$cusid' AND agentreply='0' AND propertyid='$propertyid'";
+                  $results = mysqli_query($conn, $sqli);
+                    if($results->num_rows > 0){ 
+
+                      while($sche = mysqli_fetch_array($results)){
+                      ?>
+
+                    <!-- //Display Agent options -->
+                        <h4>Respond Schedule Request Inspection Details</h4>
+                          <form action="formaction/shedulereply_action.php" method="POST">
+                           <input type="hidden" name="id" value='<?php echo $sche['id']; ?>'>
+                          <div class="row">
+                            <div class="col-md-2"><b>Time 1 - </b></div>
+                            <div class="col-md-4"><label class="radio-inline"><input type="radio" name="options" id="inlineRadio1" value='<?php echo $sche['timeslot1']; ?>'><?php echo $sche['timeslot1']; ?></label>
+                            </div>
+                          </div>
+                          <div class="row" style="margin-top:10px;">
+                            <div class="col-md-2"><b>Time 2 - </b></div>
+                            <div class="col-md-4"><label class="radio-inline"><input type="radio" name="options" id="inlineRadio1" value='<?php echo $sche['timeslot2']; ?>'><?php echo $sche['timeslot2']; ?></label>
+                            </div>
+                          </div>
+                          <div class="row" style="margin-top:10px;">
+                            <div class="col-md-2"><b>Time 3 - </b></div>
+                            <div class="col-md-4"><label class="radio-inline"><input type="radio" name="options" id="inlineRadio1" value='<?php echo $sche['timeslot3']; ?>'><?php echo $sche['timeslot3']; ?></label>
+                            </div>
+                          </div>
+                          <div class="row" style="margin-top:10px;">
+                            <div class="col-md-2"><b>Not Possible</b></div>
+                            <div class="col-md-4"><label class="radio-inline"><input type="radio" name="options" id="inlineRadio1" required value='2'>Above Mentioned 3 Timeslots are not convinint for me.</label>
+                            </div>
+                          </div>
+                          <div class="form-group" action="formaction/shedulereply_action.php" method="POST">
+                            <div class="">
+                              <button type="submit" class="btn btn-primary">Reply</button>
+                            </div>
+                          </div>
+                        </form>
+
+                    <!-- End of Agent Options -->
+
+                    <?php  
+                    }
+                  } else {
+                    echo "<b>You Have Replied to this Request!</b>";
+                  }
+                  }
               ?>
             </div>
           </div>

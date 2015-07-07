@@ -20,7 +20,7 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href='<?php echo $baseurl ?>'><i class="fa fa-home"></i> Home</a></li>
+            <li class="active"><a href='<?php echo $baseurl; ?>'><i class="fa fa-home"></i> Home</a></li>
             <li ><a href="#"><i class="fa fa-building"></i> Rent</a></li>
             <li ><a href="#"><i class="fa fa-university"></i> Resources</a></li>
             <li ><a href="#"><i class="fa fa-comments"></i> Blog</a></li>

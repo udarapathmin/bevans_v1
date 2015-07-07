@@ -41,7 +41,7 @@
     </div>
     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
        <ul class="list-group">
-          <li class="list-group-item"><a href='<?php echo $baseurl . "addadmin.php" ?>'>Request Alerts</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "askedmore.php" ?>'>Customer Requests</a></li>
           <li class="list-group-item"><a href='<?php echo $baseurl . "scheduleapplications.php" ?>'>Schedule Inspection</a></li>
         </ul>
     </div>

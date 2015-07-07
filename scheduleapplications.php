@@ -74,7 +74,7 @@
                             <th>#</th>
                             <th>Customer</th>
                             <th>Property ID</th>
-                            <th>Primary Time</th>
+                            <th>Approved Time</th>
                             <th>Agent Reply</th>
                             <th>Time</th>
                             <th>View</th>
@@ -82,7 +82,7 @@
                         </thead>
                         <tbody>
                         <?php
-                        $sql="SELECT c.firstname, cs.propertyid, cs.timeslot1,cs.timestamp,cs.agentreply FROM customer_scheduleinspection cs, customer c WHERE agentid='$aid' AND c.customerid=cs.customerid ORDER BY timestamp desc";
+                        $sql="SELECT c.firstname,c.customerid, cs.propertyid, cs.time,cs.timestamp,cs.agentreply FROM customer_scheduleinspection cs, customer c WHERE agentid='$aid' AND c.customerid=cs.customerid ORDER BY timestamp desc";
                         $result = mysqli_query($conn, $sql);
                         $no = 1;
                         while($row = mysqli_fetch_array($result)){
@@ -91,7 +91,7 @@
                             echo "<th scope='row'>".$no."</th>" . PHP_EOL;
                             echo "<td>".$row['firstname']."</td>" . PHP_EOL;
                             echo "<td>".$row['propertyid']."</td>" . PHP_EOL;
-                            echo "<td>".$row['timeslot1']."</td>" . PHP_EOL;
+                            echo "<td>".$row['time']."</td>" . PHP_EOL;
                             // echo "<td>".."</td>" . PHP_EOL;
                             if($row['agentreply'] == '0'){ 
                               echo "<td><span class='label label-primary'>Waitng</span></td>". PHP_EOL;
@@ -102,7 +102,7 @@
                             }
                             echo "<td>".$row['timestamp']."</td>" . PHP_EOL;
                             echo "<td>" . PHP_EOL; ?>
-                            <a href='<?php echo $baseurl . 'scheduleinspection.php?id='. $row['propertyid']. '&agid='.$aid ?>' class='btn btn-primary btn-xs'><i class="fa fa-eye"></i></a>
+                            <a href='<?php echo $baseurl . 'scheduleinspection.php?id='. $row['propertyid']. '&agid='.$aid . '&cid='. $row['customerid'] ?>' class='btn btn-primary btn-xs'><i class="fa fa-eye"></i></a>
                         <?php
                             echo "</td>" . PHP_EOL;
                             echo "</tr>" . PHP_EOL;

@@ -126,7 +126,7 @@
           </div>
           <div class="form-inline">
             <div class="form-group">
-              <a href="test" class="btn btn-success"><i class="fa fa-phone"></i> Contact Agent</a>
+              <a href='<?php echo $baseurl . "askmore.php?id=".$pid ?>' class="btn btn-success"><i class="fa fa-phone"></i> Contact Agent</a>
             </div>
             <div class="form-group">
               <a href='<?php echo $baseurl . "submittenant.php?id=".$pid ?>' class="btn btn-success"><i class="fa fa-cloud-upload"></i> Submit Application</a>
