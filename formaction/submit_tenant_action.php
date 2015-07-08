@@ -5,6 +5,7 @@ include "../database.php";
 	//Get POST Data Basic Data
 	$propertyid = $_POST['propertyid']; 
 	$customerid = $_POST['customerid'];
+	$agentid = $_POST['agentid'];
 	$cus_title = $_POST['cus_title'];  
 	$cus_dob = $_POST['cus_dob']; 
 	$cus_gender = $_POST['cus_gender']; 
@@ -104,10 +105,10 @@ include "../database.php";
 
 
 	//Add Tenant Application
-	$sql = "INSERT INTO tenant (propertyid, customerid, cus_title, cus_dob, cus_gender, cus_driverlicense, cus_driverlicensestate, 
+	$sql = "INSERT INTO tenant (propertyid,agentid customerid, cus_title, cus_dob, cus_gender, cus_driverlicense, cus_driverlicensestate, 
 								cus_passportno, cus_passportcountry, cus_pentionno, cus_carmake, cus_carno, cus_occupants_adults, 
 								cus_occupants_children, smoker, havepets) 
-					VALUES ('$propertyid', '$customerid', '$cus_title', '$cus_dob', '$cus_gender', '$cus_driverlicense', '$cus_driverlicensestate', '$cus_passportno', 
+					VALUES ('$propertyid', '$agentid','$customerid', '$cus_title', '$cus_dob', '$cus_gender', '$cus_driverlicense', '$cus_driverlicensestate', '$cus_passportno', 
 						'$cus_passportcountry', '$cus_pentionno', '$cus_carmake', '$cus_carno', '$cus_occupants_adults', '$cus_occupants_children', '$smoker', '$havepets')";
 
 
@@ -171,7 +172,7 @@ include "../database.php";
 		$fname = $propertyid ."-". $customerid;
 
 		//file1
-		if(isset($_FILES['proofidentity'])){
+		if($_FILES['proofidentity']['name'] != ""){
 			$file_proofidentity = $_FILES['proofidentity'];
 			$name_f1 = $fname . $file_proofidentity['name'];
 
@@ -182,7 +183,7 @@ include "../database.php";
 		}
 
 		//file2
-		if(isset($_FILES['proofincome_centerlink'])){
+		if($_FILES['proofincome_centerlink']['name'] != ""){
 			$file_proofincome_centerlink = $_FILES['proofincome_centerlink'];
 			$name_f2 = $fname . $file_proofincome_centerlink['name'];
 
@@ -193,7 +194,7 @@ include "../database.php";
 		}
 		
 		//file3
-		if(isset($_FILES['proofincome_bank'])){
+		if($_FILES['proofincome_bank']['name'] != ""){
 			$file_proofincome_bank= $_FILES['proofincome_bank'];
 			$name_f3 = $fname . $file_proofincome_bank['name'];
 
@@ -204,7 +205,7 @@ include "../database.php";
 		}
 		
 		//file4
-		if(isset($_FILES['spdoc_currentrentloger'])){
+		if($_FILES['spdoc_currentrentloger']['name'] != ""){
 			$file_spdoc_currentrentloger = $_FILES['spdoc_currentrentloger'];
 			$name_f4 = $fname . $file_spdoc_currentrentloger['name'];
 
@@ -215,7 +216,7 @@ include "../database.php";
 		}
 		
 		//file5
-		if(isset($_FILES['spdoc_rentalreciept'])){
+		if($_FILES['spdoc_rentalreciept']['name'] != ""){
 			$file_spdoc_rentalreciept = $_FILES['spdoc_rentalreciept'];
 			$name_f5 = $fname . $file_spdoc_rentalreciept['name'];
 
@@ -226,7 +227,7 @@ include "../database.php";
 		}
 		
 		//file6
-		if(isset($_FILES['spdoc_references'])){
+		if($_FILES['spdoc_references']['name'] != ""){
 			$file_spdoc_references = $_FILES['spdoc_references'];
 			$name_f6 = $fname . $file_spdoc_references['name'];
 
@@ -237,7 +238,7 @@ include "../database.php";
 		}
 		
 		//file7
-		if(isset($_FILES['spdoc_ratenotice'])){
+		if($_FILES['spdoc_ratenotice']['name'] != ""){
 			$file_spdoc_ratenotice = $_FILES['spdoc_ratenotice'];
 			$name_f7 = $fname . $file_spdoc_ratenotice['name'];
 
@@ -249,7 +250,7 @@ include "../database.php";
 		
 
 		//file8
-		if(isset($_FILES['spdoc_vehiclereg'])){
+		if($_FILES['spdoc_vehiclereg']['name'] != ""){
 			$file_spdoc_vehiclereg = $_FILES['spdoc_vehiclereg'];
 			$name_f8 = $fname . $file_spdoc_vehiclereg['name'];
 
@@ -260,7 +261,7 @@ include "../database.php";
 		}
 
 		//file9
-		if(isset($_FILES['spdoc_elecorphone'])){
+		if($_FILES['spdoc_elecorphone']['name'] != ""){
 			$file_spdoc_elecorphone = $_FILES['spdoc_elecorphone'];
 			$name_f9 = $fname . $file_spdoc_elecorphone['name'];
 

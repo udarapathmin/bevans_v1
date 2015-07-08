@@ -7,18 +7,36 @@
       header("location:login.php");
   }
   //check for Admin login
-  if($_SESSION['user_type'] != 'C'){
+  if($_SESSION['user_type'] != 'K'){
     header("location:index.php");
   }
-
     //property id
-    $propertyid = $_GET["id"];
+   if(isset($_GET["id"]))
+      $id = $_GET["id"];
+    else
+      header("location:index.php");
 
-    $un = $_SESSION['username'];
-    // Search for User
-    $sql= "SELECT * FROM customer WHERE username='$un'";
+  //Get Tenant Details
+    $sql= "SELECT * FROM tenant WHERE tappid='$id'";
     $result = $conn->query($sql);
     while($row = $result->fetch_assoc()) {
+      $customerid = $row["customerid"];
+      $propertyid = $row["propertyid"];
+    }
+
+    //Get Property Details
+    $sql= "SELECT * FROM realestateproperty WHERE propertyid='$propertyid'";
+    $result_property = $conn->query($sql);
+    while($row = $result_property->fetch_assoc()) {
+      $street1 = $row["street1"];
+      $suburb = $row["suburb"];
+      $postcode = $row["postcode"];
+      $agentid = $row["agentid"];
+    }
+
+    $sql= "SELECT * FROM customer WHERE customerid='$customerid'";
+    $result_customer = $conn->query($sql);
+    while($row = $result_customer->fetch_assoc()) {
       $iscomplete = $row["iscomplete"];
       $customerid = $row["customerid"];
       $firstname = $row["firstname"];
@@ -37,23 +55,6 @@
       $phonework = $row["phonework"];
     }
 
-    //Get Property Details
-    $sql= "SELECT * FROM realestateproperty WHERE propertyid='$propertyid'";
-    $result = $conn->query($sql);
-    while($row = $result->fetch_assoc()) {
-      $street1 = $row["street1"];
-      $suburb = $row["suburb"];
-      $postcode = $row["postcode"];
-      $agentid = $row["agentid"];
-    }
-
-    $sqltent = "SELECT * FROM tenant WHERE propertyid='$propertyid' AND customerid = '$customerid' AND status != '2'";
-    $tentres = $conn->query($sqltent);
-    if($tentres->num_rows == 0){
-      $apply = true;
-    } else {
-      $apply = false;
-    }
 
 
 ?>
@@ -64,7 +65,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Submit Tenant Application</title>
+    <title>Agent</title>
 
     
 
@@ -99,55 +100,12 @@
 
     <div class="row">
       <div class="col-md-3">
-        <?php include "customer_sidebar.php"; ?>
+        <?php include "agent_sidebar.php"; ?>
       </div>
       <div class="col-md-9">
-
-        <?php
-          
-            if( $iscomplete == '0') {
-              //if it is display message to complete profile ?>
-
-              <div class="alert alert-info alert-dismissible" role="alert">
-                <strong>Notice!</strong>Your Profile is incomplete. Please complete your profile by editing <strong><a href='<?php echo $baseurl . "editcustomerprofile.php" ?>'>here</a></strong>.
-              </div>
-
-            <?php
-            } else {
-           ?>
-          
-                 <!-- Success Edit Message -->
-          <?php
-            if(isset($_GET["submit"]) && $_GET["submit"] == 'true' ) {
-              //if it is false display error
-               ?>
-
-              <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Success!</strong><?php echo ' Tenant Form submitted' ; ?> 
-              </div>
-
-            <?php
-            }
-           ?>
-           <!-- Fail Edit Message -->
-          <?php
-            if(isset($_GET["submit"]) && $_GET["submit"] == 'false' ) {
-              //if it is false display error
-               ?>
-
-              <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Error!</strong><?php echo ' Failed to submit record' ; ?> 
-              </div>
-
-            <?php
-            }
-           ?>
-
-          <?php if($apply == true) { ?>
-        <div class="panel panel-default">
-          <div class="panel-heading">Submit Tenant Application</div>
+            <!-- Middle Col Start -->
+            <div class="panel panel-default">
+          <div class="panel-heading">View Tenant Application</div>
           <div class="panel-body">
 
             <form style="margin-left:15px;"  enctype="multipart/form-data" class="form-horizontal" id="form1" name="form1" method="post" action="formaction/submit_tenant_action.php">
@@ -1061,12 +1019,8 @@
             
           </div>
         </div>
-          <?php } else{
 
-            echo "<div class='alert alert-danger' role='alert'>You Have already applied for this Property wait for 
-                  Agents Reviews on the application. View Application Status <a href='submitedtenants.php'>here</a></div><br>" ; 
-            echo '<div class="text-center"><i class="fa fa-spinner fa-5x fa-spin"></i></div>'; 
-            } } ?>
+        <!-- End of Middle column -->
       </div>
     </div>
       
