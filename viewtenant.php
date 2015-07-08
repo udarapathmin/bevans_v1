@@ -6,7 +6,7 @@
   {
       header("location:login.php");
   }
-  //check for Admin login
+  //check for agent login
   if($_SESSION['user_type'] != 'K'){
     header("location:index.php");
   }
@@ -20,8 +20,27 @@
     $sql= "SELECT * FROM tenant WHERE tappid='$id'";
     $result = $conn->query($sql);
     while($row = $result->fetch_assoc()) {
+      //TAPP id for ref
+      $tappid = $row["tappid"];
+
       $customerid = $row["customerid"];
       $propertyid = $row["propertyid"];
+
+      //App Details
+      $cus_dob = $row["cus_dob"];
+      $cus_title = $row["cus_title"];
+      $cus_gender = $row["cus_gender"];
+      $cus_driverlicense = $row["cus_driverlicense"];
+      $cus_driverlicensestate = $row["cus_driverlicensestate"];
+      $cus_passportno = $row["cus_passportno"];
+      $cus_passportcountry = $row["cus_passportcountry"];
+      $cus_pentionno = $row["cus_pentionno"];
+      $cus_carmake = $row["cus_carmake"];
+      $cus_carno = $row["cus_carno"];
+      $cus_occupants_adults = $row["cus_occupants_adults"];
+      $cus_occupants_children = $row["cus_occupants_children"];
+      $smoker = $row["smoker"];
+      $havepets = $row["havepets"];
     }
 
     //Get Property Details
@@ -54,7 +73,6 @@
       $phonefax = $row["phonefax"];
       $phonework = $row["phonework"];
     }
-
 
 
 ?>
@@ -109,7 +127,7 @@
           <div class="panel-body">
 
             <form style="margin-left:15px;"  enctype="multipart/form-data" class="form-horizontal" id="form1" name="form1" method="post" action="formaction/submit_tenant_action.php">
-            <h2>Tenant Application</h2><hr>
+            <h2>Tenant Application - <?php echo $firstname. " ". $lastname; ?></h2><hr>
 
             <table class="table table-striped" border="1">
                 <tr>
@@ -151,13 +169,7 @@
               <input  class="form-control" readonly type="hidden" name="customerid" id="customerid" value="<?php echo $customerid; ?>"/>
                 <label for="title" class="col-sm-2 control-label">Title</label>
                 <div class="col-sm-10">
-                    <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" name="cus_title">
-                        <span class="caret"></span>
-                        <option value="Mr">Mr</option>
-                        <option value="Mrs">Mrs</option>
-                        <option value="Miss">Miss</option>
-                        <option value="Doctor">Doctor</option>
-                    </select>
+                    <input class="form-control" readonly type="text" name="firstname" id="firstname" value="<?php echo $cus_title; ?>"/>
                 </div>
             </div>
             <div class="form-group">
@@ -169,7 +181,7 @@
             <div class="form-group">
                 <label for="othernames" class="col-sm-2 control-label">Other Names</label>
                 <div class="col-sm-10">
-                    <input class="form-control" readonly type="text" name="othernames" id="othernames" value="<?php if(isset($othernames)) echo $othernames; ?>" />
+                    <input class="form-control" readonly type="text" name="othernames" id="othernames" value="<?php if(isset($othername)) {echo $othername; } ?>" />
                 </div>
             </div>
             <div class="form-group">
@@ -239,116 +251,114 @@
             <div class="form-group">
                 <label for="dob" class="col-sm-2 control-label">Date of Birth</label>
                 <div class="col-sm-10">
-                    <input required class="form-control" type="date" name="cus_dob" id="dob" />
+                    <input required class="form-control" readonly type="text" name="cus_dob" id="dob" value="<?php echo $cus_dob; ?>"  />
                 </div>
             </div>
             <div class="form-group">
                 <label for="gender" class="col-sm-2 control-label">Gender</label>
                 <div class="col-sm-10">
-                    <label class="control-label radio-inline">
-                        <input required type="radio" name="cus_gender" id="male" value="Male" />Male
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="cus_gender" id="female" value="Female" />Female
-                    </label>
+                    <input required class="form-control" readonly type="text" name="cus_dob" id="dob" value="<?php echo $cus_gender; ?>"  />
                 </div>
             </div>
             <div class="form-group">
                 <label for="phonemobile" class="col-sm-2 control-label">Mobile</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="number" name="phonemobile" id="phonemobile" value="<?php echo $phonemobile; ?>"/>
+                    <input class="form-control" readonly type="number" name="phonemobile" id="phonemobile" value="<?php echo $phonemobile; ?>"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="phonehome" class="col-sm-2 control-label">Home Phone</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="number" name="phonehome" id="phonehome" value="<?php echo $phonehome; ?>"/>
+                    <input class="form-control" readonly type="number" name="phonehome" id="phonehome" value="<?php echo $phonehome; ?>"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="phonework" class="col-sm-2 control-label">Work Phone</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="number" name="phonework" id="phonework" value="<?php echo $phonework; ?>"/>
+                    <input class="form-control"  readonly type="number" name="phonework" id="phonework" value="<?php echo $phonework; ?>"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="phonefax" class="col-sm-2 control-label">Fax</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="number" name="phonefax" id="phonefax" value="<?php echo $phonefax; ?>"/>
+                    <input class="form-control" readonly type="number" name="phonefax" id="phonefax" value="<?php echo $phonefax; ?>"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="dlno" class="col-sm-2 control-label">Driver's License No</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" name="cus_driverlicense" id="dlno" />
+                    <input class="form-control" readonly type="text" name="cus_driverlicense" id="dlno" value="<?php echo $cus_driverlicense; ?>" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="dlstate" class="col-sm-2 control-label">Driver's License State</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" name="cus_driverlicensestate" id="dlstate" />
+                    <input class="form-control" readonly type="text" name="cus_driverlicensestate" id="dlstate" value="<?php echo $cus_driverlicensestate; ?>"  />
                 </div>
             </div>
             <div class="form-group">
                 <label for="passportno" class="col-sm-2 control-label">Passport No</label>
                 <div class="col-sm-10">
-                    <input required class="form-control" type="text" name="cus_passportno" id="passportno" />
+                    <input readonly class="form-control" type="text" name="cus_passportno" id="passportno" value="<?php echo $cus_passportno; ?>" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="passportcountry" class="col-sm-2 control-label">Passport Country</label>
                 <div class="col-sm-10">
-                    <input required class="form-control" type="text" name="cus_passportcountry" id="passportcountry" />
+                    <input readonly class="form-control" type="text" name="cus_passportcountry" id="passportcountry" value="<?php echo $cus_passportcountry; ?>"  />
                 </div>
             </div>
             <div class="form-group">
                 <label for="pensionno" class="col-sm-2 control-label">Pension/ Centerlink No / If Applicable </label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" name="cus_pentionno" id="pensionno" />
+                    <input readonly class="form-control" type="text" name="cus_pentionno" id="pensionno" value="<?php echo $cus_pentionno; ?>"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="car" class="col-sm-2 control-label">Car Make and Model</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" name="cus_carmake" id="car" />
+                    <input  readonly class="form-control" type="text" name="cus_carmake" id="car" value="<?php echo $cus_carmake; ?>" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="carregno" class="col-sm-2 control-label">Car Registration No </label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" name="cus_carno" id="carregno" />
+                    <input readonly class="form-control" type="text" name="cus_carno" id="carregno" value="<?php echo $cus_carno; ?>"/>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label" for="occupants">Number of Occupants</label>
                 <div class="form-inline col-md-10">
                     <label for="noofadults" class="control-label">Adults</label>
-                    <input required type="number" class="form-control" id="noofadults" name="cus_occupants_adults" />
+                    <input readonly type="number" class="form-control" id="noofadults" name="cus_occupants_adults" value="<?php echo $cus_occupants_adults; ?>" />
 
                     <label for="noofchildren" class="control-label">Children</label>
-                    <input required type="number" class="form-control" id="noofadults" name="cus_occupants_children" />
+                    <input readonly type="number" class="form-control" id="noofadults" name="cus_occupants_children" value="<?php echo $cus_occupants_children; ?>"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="smoker" class="col-sm-2 control-label">Are you a smoker?</label>
-                <div class="col-sm-10">
-                    <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" name="smoker" id="jumpMenu2">
-                        <span class="caret"></span>
-                        <option value="1">YES</option>
-                        <option value="0">NO</option>
-                    </select>
+                <div class="col-sm-4">
+                     <input readonly class="form-control" type="text" name="cus_carno" id="carregno" value="<?php echo $smoker; ?>"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="pets" class="col-sm-2 control-label">Do you have any pets?</label>
-                <div class="col-sm-10">
-                    <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" name="havepets" id="jumpMenu3">
-                        <span class="caret"></span>
-                        <option value="1">YES</option>
-                        <option value="0">NO</option>
-                    </select>
+                <div class="col-sm-4">
+                     <input readonly class="form-control" type="text" name="cus_carno" id="carregno" value="<?php echo $havepets; ?>"/>
                 </div>
             </div>
+
+            <!-- Residential Form -->
+            <!-- Current Resi -->
+            <?php
+            //Current Residential Details
+              $sql= "SELECT * FROM tenant_residential WHERE tappid='$tappid' AND currentorpast = 'C' ";
+              $result_customer = $conn->query($sql);
+              while($row = $result_customer->fetch_assoc()) {
+
+          
+            ?>
             <div class="form-group">
                 <label for="applicanthistory" class="control-label lead">Applicant History</label>
             </div>
@@ -356,83 +366,97 @@
                 <label for="residential" class="control-label lead"><i>Current Residential Details</i></label>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label" for="currentaddress">Address</label>
+                <label class="col-md-2 control-label" for="prevaddress">Address</label>
                 <div class="col-md-10">
                     <div class="form-group">
-                        <label for="currentno" class="col-sm-2 control-label">No</label>
+                        <label for="prevno" class="col-sm-2 control-label">No</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="c_addno" id="currentno" />
+                            <input readonly class=" col-sm-10 form-control " value="<?php echo $row['addno']; ?>" type="text" name="p_addno" id="prevno" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-10 col-md-offset-2">
                     <div class="form-group">
-                        <label for="currentstreet1" class="col-md-2 control-label">Street 1</label>
+                        <label for="prevstreet1" class="col-md-2 control-label">Street 1</label>
                         <div class="col-sm-10">
-                            <input required class=" col-md-10 form-control " type="text" name="c_street1" id="currentstreet1" />
+                            <input readonly class=" col-md-10 form-control " value="<?php echo $row['street1']; ?>" type="text" name="p_street1" id="prevstreet1" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-10 col-md-offset-2 ">
                     <div class="form-group">
-                        <label for="currentstreet2" class="col-sm-2 control-label">Street 2</label>
+                        <label for="prevstreet2" class="col-sm-2 control-label">Street 2</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="c_street2" id="currentstreet2" />
+                            <input readonly class=" col-sm-10 form-control " value="<?php echo $row['street2']; ?>" type="text" name="p_street2" id="prevstreet2" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-10 col-md-offset-2 ">
                     <div class="form-group">
-                        <label for="currentsuburb" class="col-sm-2 control-label">Suburb</label>
+                        <label for="prevsuburb" class="col-sm-2 control-label">Suburb</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="c_suburb" id="currentsuburb" />
+                            <input readonly class=" col-sm-10 form-control " value="<?php echo $row['suburb']; ?>" type="text" name="p_suburb" id="prevsuburb" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-10 col-md-offset-2 ">
                     <div class="form-group">
-                        <label for="currentpostcode" class="col-sm-2 control-label">Postcode</label>
+                        <label for="prevpostcode" class="col-sm-2 control-label">Postcode</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="c_postcode" id="currentpostcode" />
+                            <input readonly class=" col-sm-10 form-control " value="<?php echo $row['state']; ?>" type="text" name="p_postcode" id="prevpostcode" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-10 col-md-offset-2 ">
                     <div class="form-group">
-                        <label for="currentstate" class="col-sm-2 control-label">State</label>
+                        <label for="prevstate" class="col-sm-2 control-label">State</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="c_state" id="currentstate" />
+                            <input readonly class=" col-sm-10 form-control " value="<?php echo $row['postcode']; ?>" type="text" name="p_state" id="prevstate" />
                         </div>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="noOfMonths" class="col-sm-2 control-label">How long you have been in this address (Months)?</label>
+                <label for="prevNoOfMonths" class="col-sm-2 control-label">How long you have been in this address (Months)?</label>
                 <div class="col-sm-10">
-                    <input required class="form-control" type="number" name="c_time" id="noOfMonths" />
+                    <input readonly class="form-control" type="number"  value="<?php echo $row['time']; ?>" name="p_time" id="prevNoOfMonths" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="rent" class="col-sm-2 control-label">Rent $</label>
+                <label for="prevRent" class="col-sm-2 control-label">Rent $</label>
                 <div class="col-sm-10">
-                    <input required class="form-control" type="number" name="c_rent" id="rent" />
+                    <input readonly class="form-control" type="number" value="<?php echo $row['rent']; ?>" name="p_rent" id="prevRent" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-inline">
-                    <label for="agent" class="col-md-2 control-label">Agent/Landlord</label>
-                    <input required type="text" class="form-control" id="c_landlord_name" name="c_landlord_name" />
+                    <label for="prevAgent" class="col-md-2 control-label">Agent/Landlord</label>
+                    <input readonly type="text" value="<?php echo $row['landlord_name']; ?>" class="form-control" id="prevAgent" name="p_landlord_name" />
 
-                    <label for="agentphone" class="control-label">Phone</label>
-                    <input required type="number" class="form-control" id="c_landlord_phone" name="c_landlord_phone" />
+                    <label for="prevAgentphone" class="control-label">Phone</label>
+                    <input readonly type="number" value="<?php echo $row['landlord_phone']; ?>" class="form-control" id="prevAgentphone" name="p_landlord_phone" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="reason" class="col-sm-2 control-label">Reason for leaving?</label>
+                <label for="prevReason" class="col-sm-2 control-label">Reason for leaving?</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" name="c_reasontoleave" id="reason" />
+                    <input readonly class="form-control" value="<?php echo $row['reasontoleave']; ?>" type="text" name="p_reasontoleave" id="prevReason" />
                 </div>
             </div>
+            
+            <?php } ?>
+            <!-- End of Current Resi -->
+
+
+            <!-- Previous Resi -->
+            <?php
+            //Current Residential Details
+              $sql= "SELECT * FROM tenant_residential WHERE tappid='$tappid' AND currentorpast = 'P' ";
+              $result_customer = $conn->query($sql);
+              while($row = $result_customer->fetch_assoc()) {
+
+          
+            ?>
             <div class="form-group">
                 <label for="prevresidential" class="control-label lead"><i>Previous Residential Details</i></label>
             </div>
@@ -442,7 +466,7 @@
                     <div class="form-group">
                         <label for="prevno" class="col-sm-2 control-label">No</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="p_addno" id="prevno" />
+                            <input readonly class=" col-sm-10 form-control " value="<?php echo $row['addno']; ?>" type="text" name="p_addno" id="prevno" />
                         </div>
                     </div>
                 </div>
@@ -450,7 +474,7 @@
                     <div class="form-group">
                         <label for="prevstreet1" class="col-md-2 control-label">Street 1</label>
                         <div class="col-sm-10">
-                            <input required class=" col-md-10 form-control " type="text" name="p_street1" id="prevstreet1" />
+                            <input readonly class=" col-md-10 form-control " value="<?php echo $row['street1']; ?>" type="text" name="p_street1" id="prevstreet1" />
                         </div>
                     </div>
                 </div>
@@ -458,7 +482,7 @@
                     <div class="form-group">
                         <label for="prevstreet2" class="col-sm-2 control-label">Street 2</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="p_street2" id="prevstreet2" />
+                            <input readonly class=" col-sm-10 form-control " value="<?php echo $row['street2']; ?>" type="text" name="p_street2" id="prevstreet2" />
                         </div>
                     </div>
                 </div>
@@ -466,7 +490,7 @@
                     <div class="form-group">
                         <label for="prevsuburb" class="col-sm-2 control-label">Suburb</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="p_suburb" id="prevsuburb" />
+                            <input readonly class=" col-sm-10 form-control " value="<?php echo $row['suburb']; ?>" type="text" name="p_suburb" id="prevsuburb" />
                         </div>
                     </div>
                 </div>
@@ -474,7 +498,7 @@
                     <div class="form-group">
                         <label for="prevpostcode" class="col-sm-2 control-label">Postcode</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="p_postcode" id="prevpostcode" />
+                            <input readonly class=" col-sm-10 form-control " value="<?php echo $row['state']; ?>" type="text" name="p_postcode" id="prevpostcode" />
                         </div>
                     </div>
                 </div>
@@ -482,7 +506,7 @@
                     <div class="form-group">
                         <label for="prevstate" class="col-sm-2 control-label">State</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="p_state" id="prevstate" />
+                            <input readonly class=" col-sm-10 form-control " value="<?php echo $row['postcode']; ?>" type="text" name="p_state" id="prevstate" />
                         </div>
                     </div>
                 </div>
@@ -490,53 +514,61 @@
             <div class="form-group">
                 <label for="prevNoOfMonths" class="col-sm-2 control-label">How long you have been in this address (Months)?</label>
                 <div class="col-sm-10">
-                    <input required class="form-control" type="number" name="p_time" id="prevNoOfMonths" />
+                    <input readonly class="form-control" type="number"  value="<?php echo $row['time']; ?>" name="p_time" id="prevNoOfMonths" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="prevRent" class="col-sm-2 control-label">Rent $</label>
                 <div class="col-sm-10">
-                    <input required class="form-control" type="number" name="p_rent" id="prevRent" />
+                    <input readonly class="form-control" type="number" value="<?php echo $row['rent']; ?>" name="p_rent" id="prevRent" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-inline">
                     <label for="prevAgent" class="col-md-2 control-label">Agent/Landlord</label>
-                    <input required type="text" class="form-control" id="prevAgent" name="p_landlord_name" />
+                    <input readonly type="text" value="<?php echo $row['landlord_name']; ?>" class="form-control" id="prevAgent" name="p_landlord_name" />
 
                     <label for="prevAgentphone" class="control-label">Phone</label>
-                    <input required type="number" class="form-control" id="prevAgentphone" name="p_landlord_phone" />
+                    <input readonly type="number" value="<?php echo $row['landlord_phone']; ?>" class="form-control" id="prevAgentphone" name="p_landlord_phone" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="prevReason" class="col-sm-2 control-label">Reason for leaving?</label>
                 <div class="col-sm-10">
-                    <input required class="form-control" type="text" name="p_reasontoleave" id="prevReason" />
+                    <input readonly class="form-control" value="<?php echo $row['reasontoleave']; ?>" type="text" name="p_reasontoleave" id="prevReason" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="bondrefund" class="col-sm-2 control-label">Was bond refunded in full?</label>
                 <div class="col-sm-10">
-                    <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" name="p_bondrefunded" id="jumpMenu4">
-                        <span class="caret"></span>
-                        <option value="1">YES</option>
-                        <option value="0">NO</option>
-                    </select>
+                    <input readonly class="form-control" value="<?php if($row['bondrefunded']=='1'){echo "Yes";} else {echo "No";} ?>" type="text" name="p_reasontoleave" id="prevReason" />
                 </div>
             </div>
+            <!-- End of Previous Resi -->
+            <?php } ?>
+            <!-- End Of Residential -->
+
+            <!-- Employeement Current -->
+            <?php
+              $sql= "SELECT * FROM tenant_empdetails WHERE tappid='$tappid' AND currentorpast = 'C' ";
+              $result_customer = $conn->query($sql);
+              while($row = $result_customer->fetch_assoc()) {
+
+          
+            ?>
             <div class="form-group">
                 <label for="currentemployer" class="control-label lead">Current Employment Details</label>
             </div>
             <div class="form-group">
                 <label for="occupation" class="col-sm-2 control-label">Occupation</label>
                 <div class="col-sm-10">
-                    <input required class="form-control" type="text" name="em_c_occupation" id="occupation" />
+                    <input readonly class="form-control" type="text" name="em_c_occupation" id="occupation" value="<?php echo $row['occupation']; ?>"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="curremployer" class="col-sm-2 control-label">Current Employer</label>
                 <div class="col-sm-10">
-                    <input required class="form-control" type="text" name="em_c_post" id="curremployer" />
+                    <input readonly class="form-control" type="text" name="em_c_post" id="curremployer" value="<?php echo $row['post']; ?>"/>
                 </div>
             </div>
             <div class="form-group">
@@ -545,7 +577,7 @@
                     <div class="form-group">
                         <label for="workno" class="col-sm-2 control-label">No</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="em_c_addno" id="workno" />
+                            <input readonly class=" col-sm-10 form-control " type="text" name="em_c_addno" id="workno" value="<?php echo $row['street2']; ?>"/>
                         </div>
                     </div>
                 </div>
@@ -553,7 +585,7 @@
                     <div class="form-group">
                         <label for="workstreet1" class="col-md-2 control-label">Street 1</label>
                         <div class="col-sm-10">
-                            <input required class=" col-md-10 form-control " type="text" name="em_c_street1" id="em_c_street1" />
+                            <input readonly class=" col-md-10 form-control " type="text" name="em_c_street1" id="em_c_street1" value="<?php echo $row['street1']; ?>" />
                         </div>
                     </div>
                 </div>
@@ -561,7 +593,7 @@
                     <div class="form-group">
                         <label for="workstreet2" class="col-sm-2 control-label">Street 2</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="em_c_street2" id="workstreet2" />
+                            <input readonly class=" col-sm-10 form-control " type="text" name="em_c_street2" id="workstreet2" value="<?php echo $row['suburb']; ?>"/>
                         </div>
                     </div>
                 </div>
@@ -569,7 +601,7 @@
                     <div class="form-group">
                         <label for="worksuburb" class="col-sm-2 control-label">Suburb</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="em_c_suburb" id="worksuburb" />
+                            <input readonly class=" col-sm-10 form-control " type="text" name="em_c_suburb" id="worksuburb" value="<?php echo $row['state']; ?>"/>
                         </div>
                     </div>
                 </div>
@@ -577,7 +609,7 @@
                     <div class="form-group">
                         <label for="workpostcode" class="col-sm-2 control-label">Postcode</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="em_c_postcode" id="workpostcode" />
+                            <input readonly class=" col-sm-10 form-control " type="text" name="em_c_postcode" id="workpostcode" value="<?php echo $row['postcode']; ?>"/>
                         </div>
                     </div>
                 </div>
@@ -585,7 +617,7 @@
                     <div class="form-group">
                         <label for="workstate" class="col-sm-2 control-label">State</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="em_c_state" id="workstate" />
+                            <input readonly class=" col-sm-10 form-control " type="text" name="em_c_state" id="workstate" value="<?php echo $row['state']; ?>"/>
                         </div>
                     </div>
                 </div>
@@ -593,129 +625,139 @@
             <div class="form-group">
                 <div class="form-inline">
                     <label for="workcontact" class="col-md-2 control-label">Contact Name(Payroll/Manager)</label>
-                    <input required type="text" class="form-control" id="workcontact" name="em_c_payrollmanager_name" />
+                    <input readonly type="text" class="form-control" id="workcontact" name="em_c_payrollmanager_name" value="<?php echo $row['payrollmanager_name']; ?>"/>
 
                     <label for="managerphone" class="control-label">Phone</label>
-                    <input required type="number" class="form-control" id="managerphone" name="em_c_payrollmanagerphone" />
+                    <input readonly type="number" class="form-control" id="managerphone" name="em_c_payrollmanagerphone" value="<?php echo $row['payrollmanager_phone']; ?>"/>
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-inline">
                     <label for="length" class="col-md-2 control-label">Length of employment(Months)</label>
-                    <input required type="number" class="form-control" id="length" name="em_c_lof" />
+                    <input readonly type="number" class="form-control" id="length" name="em_c_lof" value="<?php echo $row['lof']; ?>" />
 
                     <label for="netincome" class="control-label">Net income per month($)</label>
-                    <input required type="number" class="form-control" id="netincome" name="em_c_netincome" />
+                    <input readonly type="number" class="form-control" id="netincome" name="em_c_netincome" value="<?php echo $row['netincome']; ?>"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="employmenttype" class="col-sm-2 control-label">Type</label>
                 <div class="col-sm-10">
-                    <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" name="em_c_type" id="jumpMenu5">
-                        <span class="caret"></span>
-                        <option value="Full Time">Full Time</option>
-                        <option value="Part Time<">Part Time</option>
-                        <option value="Casual">Casual</option>
-                        <option value="Other">Other</option>
-                    </select>
+                    <input readonly type="text" class="form-control" id="netincome" name="em_c_netincome" value="<?php echo $row['type']; ?>"/>
                 </div>
             </div>
+            <?php } ?>
+            <!-- End of current emp -->
+
+            <!-- Previ emp -->
+            <?php
+              $sql= "SELECT * FROM tenant_empdetails WHERE tappid='$tappid' AND currentorpast = 'P' ";
+              $result_customer = $conn->query($sql);
+              while($row = $result_customer->fetch_assoc()) {
+
+          
+            ?>
             <div class="form-group">
                 <label for="prevemployer" class="control-label lead">Previous Employment Details</label>
             </div>
             <div class="form-group">
-                <label for="prevoccupation" class="col-sm-2 control-label">Occupation</label>
+                <label for="occupation" class="col-sm-2 control-label">Occupation</label>
                 <div class="col-sm-10">
-                    <input required class="form-control" type="text" name="em_p_occupation" id="prevoccupation" />
+                    <input readonly class="form-control" type="text" name="em_c_occupation" id="occupation" value="<?php echo $row['occupation']; ?>"/>
                 </div>
             </div>
             <div class="form-group">
-                <label for="prevemployer" class="col-sm-2 control-label">Previous Employer</label>
+                <label for="curremployer" class="col-sm-2 control-label">Current Employer</label>
                 <div class="col-sm-10">
-                    <input required class="form-control" type="text" name="em_p_post" id="prevemployer" />
+                    <input readonly class="form-control" type="text" name="em_c_post" id="curremployer" value="<?php echo $row['post']; ?>"/>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label" for="prevworkaddress">Address</label>
+                <label class="col-md-2 control-label" for="workaddress">Address</label>
                 <div class="col-md-10">
                     <div class="form-group">
-                        <label for="prevworkno" class="col-sm-2 control-label">No</label>
+                        <label for="workno" class="col-sm-2 control-label">No</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="em_p_addno" id="prevworkno" />
+                            <input readonly class=" col-sm-10 form-control " type="text" name="em_c_addno" id="workno" value="<?php echo $row['street2']; ?>"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-10 col-md-offset-2">
                     <div class="form-group">
-                        <label for="prevworkstreet1" class="col-md-2 control-label">Street 1</label>
+                        <label for="workstreet1" class="col-md-2 control-label">Street 1</label>
                         <div class="col-sm-10">
-                            <input required class=" col-md-10 form-control " type="text" name="em_p_street1" id="prevworkstreet1" />
+                            <input readonly class=" col-md-10 form-control " type="text" name="em_c_street1" id="em_c_street1" value="<?php echo $row['street1']; ?>" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-10 col-md-offset-2 ">
                     <div class="form-group">
-                        <label for="prevworkstreet2" class="col-sm-2 control-label">Street 2</label>
+                        <label for="workstreet2" class="col-sm-2 control-label">Street 2</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="em_p_street2" id="prevworkstreet2" />
+                            <input readonly class=" col-sm-10 form-control " type="text" name="em_c_street2" id="workstreet2" value="<?php echo $row['suburb']; ?>"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-10 col-md-offset-2 ">
                     <div class="form-group">
-                        <label for="prevworksuburb" class="col-sm-2 control-label">Suburb</label>
+                        <label for="worksuburb" class="col-sm-2 control-label">Suburb</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="em_p_suburb" id="prevworksuburb" />
+                            <input readonly class=" col-sm-10 form-control " type="text" name="em_c_suburb" id="worksuburb" value="<?php echo $row['state']; ?>"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-10 col-md-offset-2 ">
                     <div class="form-group">
-                        <label for="prevworkpostcode" class="col-sm-2 control-label">Postcode</label>
+                        <label for="workpostcode" class="col-sm-2 control-label">Postcode</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="em_p_postcode" id="em_p_postcode" />
+                            <input readonly class=" col-sm-10 form-control " type="text" name="em_c_postcode" id="workpostcode" value="<?php echo $row['postcode']; ?>"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-10 col-md-offset-2 ">
                     <div class="form-group">
-                        <label for="prevworkstate" class="col-sm-2 control-label">State</label>
+                        <label for="workstate" class="col-sm-2 control-label">State</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="em_p_state" id="prevworkstate" />
+                            <input readonly class=" col-sm-10 form-control " type="text" name="em_c_state" id="workstate" value="<?php echo $row['state']; ?>"/>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-inline">
-                    <label for="prevworkcontact" class="col-md-2 control-label">Contact Name(Payroll/Manager)</label>
-                    <input required type="text" class="form-control" id="prevworkcontact" name="em_p_payrollmanager_name" />
+                    <label for="workcontact" class="col-md-2 control-label">Contact Name(Payroll/Manager)</label>
+                    <input readonly type="text" class="form-control" id="workcontact" name="em_c_payrollmanager_name" value="<?php echo $row['payrollmanager_name']; ?>"/>
 
-                    <label for="prevmanagerphone" class="control-label">Phone</label>
-                    <input required type="number" class="form-control" id="prevmanagerphone" name="em_p_payrollmanager_phone" />
+                    <label for="managerphone" class="control-label">Phone</label>
+                    <input readonly type="number" class="form-control" id="managerphone" name="em_c_payrollmanagerphone" value="<?php echo $row['payrollmanager_phone']; ?>"/>
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-inline">
-                    <label for="prevlength" class="col-md-2 control-label">Length of employment(Months)</label>
-                    <input required type="number" class="form-control" id="prevlength" name="em_p_lof" />
+                    <label for="length" class="col-md-2 control-label">Length of employment(Months)</label>
+                    <input readonly type="number" class="form-control" id="length" name="em_c_lof" value="<?php echo $row['lof']; ?>" />
 
-                    <label for="prevnetincome" class="control-label">Net income per month($)</label>
-                    <input required type="number" class="form-control" id="prevnetincome" name="em_p_netincome" />
+                    <label for="netincome" class="control-label">Net income per month($)</label>
+                    <input readonly type="number" class="form-control" id="netincome" name="em_c_netincome" value="<?php echo $row['netincome']; ?>"/>
                 </div>
             </div>
             <div class="form-group">
-                <label for="prevemploymenttype" class="col-sm-2 control-label">Type</label>
+                <label for="employmenttype" class="col-sm-2 control-label">Type</label>
                 <div class="col-sm-10">
-                    <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" name="em_p_type" id="jumpMenu5">
-                        <span class="caret"></span>
-                        <option value="Full Time">Full Time</option>
-                        <option value="Part Time<">Part Time</option>
-                        <option value="Casual">Casual</option>
-                        <option value="Other">Other</option>
-                    </select>
+                    <input readonly type="text" class="form-control" id="netincome" name="em_c_netincome" value="<?php echo $row['type']; ?>"/>
                 </div>
             </div>
+            <?php } ?>
+            <!-- End of previous emp -->
+
+            <!-- Ref 1 -->
+            <?php
+              $sql= "SELECT * FROM tenant_references WHERE tappid='$tappid' AND refid = '1' ";
+              $result_customer = $conn->query($sql);
+              while($row = $result_customer->fetch_assoc()) {
+
+          
+            ?>
             <div class="form-group">
                 <label for="references" class="control-label lead">References</label>
             </div>
@@ -725,7 +767,7 @@
                     <div class="form-group">
                         <label for="firstnameref1" class="col-sm-2 control-label">First Name</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="ref1_firstname" id="firstnameref1" />
+                            <input readonly class=" col-sm-10 form-control " type="text" value="<?php echo $row['firstname']; ?>" name="ref1_firstname" id="firstnameref1" />
                         </div>
                     </div>
                 </div>
@@ -733,7 +775,7 @@
                     <div class="form-group">
                         <label for="lastnameref1" class="col-md-2 control-label">Last Name</label>
                         <div class="col-sm-10">
-                            <input required class=" col-md-10 form-control " type="text" name="ref1_lastname" id="lastnameref1" />
+                            <input readonly class=" col-md-10 form-control " type="text" value="<?php echo $row['lastname']; ?>" name="ref1_lastname" id="lastnameref1" />
                         </div>
                     </div>
                 </div>
@@ -741,7 +783,7 @@
                     <div class="form-group">
                         <label for="relationshipref1" class="col-sm-2 control-label">Relationship</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="ref1_relationship" id="relationshipref1" />
+                            <input readonly class=" col-sm-10 form-control " type="text" value="<?php echo $row['relationship']; ?>" name="ref1_relationship" id="relationshipref1" />
                         </div>
                     </div>
                 </div>
@@ -749,74 +791,96 @@
                     <div class="form-group">
                         <label for="phoneref1" class="col-sm-2 control-label">Phone</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="number" name="ref1_phone" id="phoneref1" />
+                            <input readonly class=" col-sm-10 form-control " type="number" value="<?php echo $row['phone']; ?>" name="ref1_phone" id="phoneref1" />
                         </div>
                     </div>
                 </div>
             </div>
+            <?php } ?>
+            <!-- end of ref 1 -->
+
+            <!-- Start of ref 2 -->
+            <?php
+              $sql= "SELECT * FROM tenant_references WHERE tappid='$tappid' AND refid = '2' ";
+              $result_customer = $conn->query($sql);
+              while($row = $result_customer->fetch_assoc()) {
+
+          
+            ?>
             <div class="form-group">
-                <label class="col-md-2 control-label" for="referee2">Referee 2</label>
+                <label class="col-md-2 control-label" for="referee1">Referee 2</label>
                 <div class="col-md-10">
                     <div class="form-group">
-                        <label for="firstnameref2" class="col-sm-2 control-label">First Name</label>
+                        <label for="firstnameref1" class="col-sm-2 control-label">First Name</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="ref2_firstname" id="firstnameref2" />
+                            <input readonly class=" col-sm-10 form-control " type="text" value="<?php echo $row['firstname']; ?>" name="ref1_firstname" id="firstnameref1" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-10 col-md-offset-2">
                     <div class="form-group">
-                        <label for="lastnameref2" class="col-md-2 control-label">Last Name</label>
+                        <label for="lastnameref1" class="col-md-2 control-label">Last Name</label>
                         <div class="col-sm-10">
-                            <input required class=" col-md-10 form-control " type="text" name="ref2_lastname" id="lastnameref2" />
+                            <input readonly class=" col-md-10 form-control " type="text" value="<?php echo $row['lastname']; ?>" name="ref1_lastname" id="lastnameref1" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-10 col-md-offset-2 ">
                     <div class="form-group">
-                        <label for="relationshipref2" class="col-sm-2 control-label">Relationship</label>
+                        <label for="relationshipref1" class="col-sm-2 control-label">Relationship</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="text" name="ref2_relationship" id="relationshipref2" />
+                            <input readonly class=" col-sm-10 form-control " type="text" value="<?php echo $row['relationship']; ?>" name="ref1_relationship" id="relationshipref1" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-10 col-md-offset-2 ">
                     <div class="form-group">
-                        <label for="phoneref2" class="col-sm-2 control-label">Phone</label>
+                        <label for="phoneref1" class="col-sm-2 control-label">Phone</label>
                         <div class="col-sm-10">
-                            <input required class=" col-sm-10 form-control " type="number" name="ref2_phone" id="phoneref2" />
+                            <input readonly class=" col-sm-10 form-control " type="number" value="<?php echo $row['phone']; ?>" name="ref1_phone" id="phoneref1" />
                         </div>
                     </div>
                 </div>
             </div>
+            <?php } ?>
+            <!-- End of ref 2 -->
+
+            <!-- Emergency -->
+            <?php
+              $sql= "SELECT * FROM tenant_emergency WHERE tappid='$tappid'";
+              $result_customer = $conn->query($sql);
+              while($row = $result_customer->fetch_assoc()) {
+
+          
+            ?>
             <div class="form-group">
                 <label for="emergencycontact" class="control-label lead">Emergency Contact Details</label>
             </div>
             <div class="form-group">
                 <label for="emfirstname" class="col-sm-2 control-label">First Name</label>
                 <div class="col-sm-10">
-                    <input required class="form-control" type="text" name="emg_firstname" id="emfirstname" />
+                    <input readonly class="form-control" type="text" name="emg_firstname" id="emfirstname" value="<?php echo $row['firstname']; ?>"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="emlastname" class="col-sm-2 control-label">Last Name</label>
                 <div class="col-sm-10">
-                    <input required class="form-control" type="text" name="emg_lastname" id="emlastname" />
+                    <input readonly class="form-control" type="text" name="emg_lastname" id="emlastname" value="<?php echo $row['lastname']; ?>" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="emrelationship" class="col-sm-2 control-label">Relationship</label>
                 <div class="col-sm-10">
-                    <input required class="form-control" type="text" name="emg_relationship" id="emrelationship" />
+                    <input readonly class="form-control" type="text" name="emg_relationship" id="emrelationship" value="<?php echo $row['relationship']; ?>"/>
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-inline">
                     <label for="emmobile" class="col-md-2 control-label">Phone (Mobile)</label>
-                    <input  required type="number" class="form-control" id="emmobile" name="emg_phonemobile" />
+                    <input  readonly type="number" class="form-control" id="emmobile" name="emg_phonemobile" value="<?php echo $row['phonemobile']; ?>"/>
 
                     <label for="emphonehome" class="control-label">Phone (Home)</label>
-                    <input required type="number" class="form-control" id="emphonehome" name="emg_phonehome" />
+                    <input readonly type="number" class="form-control" id="emphonehome" name="emg_phonehome" value="<?php echo $row['phonehome']; ?>"/>
 
                 
                 </div>
@@ -828,35 +892,21 @@
                     &nbsp;
                 </p>
                 <label for="prevtenancies" class="col-sm-2 control-label">Have any of your previous tenancies been terminated?</label>
-                <div class="col-sm-10">
-                    <label class="control-label radio-inline">
-                        <input required type="radio" name="emg_tenancystatus" id="patf1" />YES
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="emg_tenancystatus" id="patf2" />NO
-                    </label>
+                <div class="col-sm-4">
+                    <input  readonly type="text" class="form-control" id="emmobile" name="emg_phonemobile" value="<?php if($row['tenancystatus']=='1'){ echo "Yes"; } else {echo "No"; } ?>"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="indebt" class="col-sm-2 control-label">Are you in dept to another Agent / Landlord?</label>
-                <div class="col-sm-10">
-                    <label class="control-label radio-inline">
-                        <input required type="radio" name="emg_deptlandlord" id="patf3" />YES
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="emg_deptlandlord" id="patf4" />NO
-                    </label>
+                <div class="col-sm-4">
+                    <input  readonly type="text" class="form-control" id="emmobile" name="emg_phonemobile" value="<?php if($row['deptlandlord']=='1'){echo "Yes";}else{echo "No";} ?>"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="paymentproblems" class="col-sm-2 control-label">Are there any existing reasons that may effect your rent payments?</label>
-                <div class="col-sm-10">
-                    <label class="control-label radio-inline">
-                        <input required type="radio" name="emg_reasonsforpayments" id="patf5" />YES
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="emg_reasonsforpayments" id="patf6" />NO
-                    </label>
+                <div class="col-sm-4">
+                    <input  readonly type="text" class="form-control" id="emmobile" name="emg_phonemobile" 
+                    value="<?php if($row['reasonsforpayments']=='1'){ echo "Yes"; } else{ echo "No"; } ?>"/>
                 </div>
             </div>
             <p>
@@ -865,6 +915,18 @@
                 &nbsp;
             </p>
             <hr>
+            <?php } ?>
+            <!-- End of Emergency -->
+
+            <!-- Files Check -->
+            <?php
+              $sql= "SELECT * FROM tenant_files WHERE tappid='$tappid'";
+              $result_customer = $conn->query($sql);
+              while($row = $result_customer->fetch_assoc()) {
+
+              //Total marks for evaluation
+              $totalmarks = 0;
+            ?>
             <div class="form-group" style="border:medium">
                 <label>100 POINTS CHECK</label>
                 <p>* A minimum of 100 points is required for each applicant.</p>
@@ -889,9 +951,15 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="form-group">
-                        <input type="file" class="form-control" name="proofidentity" id="poi" />
+                    <?php if($row['proofidentity'] != '') { 
+                      $totalmarks = $totalmarks + 30;
+                      ?>
+                    <div style="color:#5bc0de;" class="form-group text-center">
+                        <i class="fa fa-file fa-3x"></i><br>
+                        <STRONG>File Subimitted</STRONG><br>
+                        <a href="<?php echo $row['proofidentity'];  ?>">Review File</a>
                     </div>
+                    <?php } ?>
                 </div>
             </div>
             <p>
@@ -910,13 +978,29 @@
                     <div class="form-group">
                         <label for="lastpay" class="col-sm-5 control-label">Last pay advise / Current Centerlink statement</label>
                         <div class="col-sm-7">
-                            <input type="file" class="form-control" name="proofincome_centerlink" id="poi" />
+                            <?php if($row['proofincome_centerlink'] != '') { 
+                              $totalmarks = $totalmarks + 15; ?>
+                            <div style="color:#5bc0de;" class="form-group text-center">
+                                <i class="fa fa-file fa-3x"></i><br>
+                                <STRONG>File Subimitted</STRONG><br>
+                                <a href="<?php echo $row['proofincome_centerlink'];  ?>">Review File</a>
+                            </div>
+                            <?php } ?>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="bankstatement" class="col-sm-5 control-label">Current bank statements (must have sufficient funds to meet rental payments)</label>
                         <div class="col-sm-7">
-                            <input type="file" class="form-control" name="proofincome_bank" id="poib2" />
+
+                        <?php if($row['proofincome_bank'] != '') { 
+                          $totalmarks = $totalmarks + 15; ?>
+                        <div style="color:#5bc0de;" class="form-group text-center">
+                            <i class="fa fa-file fa-3x"></i><br>
+                            <STRONG>File Subimitted</STRONG><br>
+                            <a href="<?php echo $row['proofincome_bank'];  ?>">Review File</a>
+                        </div>
+                        <?php } ?>
+                            
                         </div>
                     </div>
 
@@ -929,7 +1013,7 @@
             </p>
             <div class="form-group">
                 <label><b>Supportive Documentation</b></label>
-                <p>( You must provide atleast 40 points of the following documentation. )</p>
+                <p>( Customer must reach atleast 40 points of the following documentation. )</p>
             </div>
             <div class="row">
                 <div class="col-md-3">
@@ -939,7 +1023,14 @@
                     <div class="form-group">
                         <label for="rentalloger" class="col-sm-5 control-label">Current Rental Loger(From Agent)</label>
                         <div class="col-sm-7">
-                            <input type="file" class="form-control" name="spdoc_currentrentloger" id="poib4" />
+                            <?php if($row['spdoc_currentrentloger'] != '') { 
+                              $totalmarks = $totalmarks + 40; ?>
+                            <div style="color:#5bc0de;" class="form-group text-center">
+                                <i class="fa fa-file fa-3x"></i><br>
+                                <STRONG>File Subimitted</STRONG><br>
+                                <a href="<?php echo $row['spdoc_currentrentloger'];  ?>">Review File</a>
+                            </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -952,7 +1043,14 @@
                     <div class="form-group">
                         <label for="rentreceipts" class="col-sm-5 control-label">Last 2 rental reciepts</label>
                         <div class="col-sm-7">
-                            <input type="file" class="form-control" name="spdoc_rentalreciept" id="poib5" />
+                              <?php if($row['spdoc_rentalreciept'] != '') { 
+                                $totalmarks = $totalmarks + 20; ?>
+                              <div style="color:#5bc0de;" class="form-group text-center">
+                                  <i class="fa fa-file fa-3x"></i><br>
+                                  <STRONG>File Subimitted</STRONG><br>
+                                  <a href="<?php echo $row['spdoc_rentalreciept'];  ?>">Review File</a>
+                              </div>
+                              <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -965,7 +1063,14 @@
                     <div class="form-group">
                         <label for="writtenrefs" class="col-sm-5 control-label">Two written references</label>
                         <div class="col-sm-7">
-                            <input type="file" class="form-control" name="spdoc_references" id="poib7" />
+                            <?php if($row['spdoc_references'] != '') {
+                            $totalmarks = $totalmarks + 20; ?>
+                              <div style="color:#5bc0de;" class="form-group text-center">
+                                  <i class="fa fa-file fa-3x"></i><br>
+                                  <STRONG>File Subimitted</STRONG><br>
+                                  <a href="<?php echo $row['spdoc_references'];  ?>">Review File</a>
+                              </div>
+                              <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -978,7 +1083,14 @@
                     <div class="form-group">
                         <label for="ratenotice" class="col-sm-5 control-label">Recent Rate Notice</label>
                         <div class="col-sm-7">
-                            <input type="file" class="form-control" name="spdoc_ratenotice" id="poib9" />
+                            <?php if($row['spdoc_ratenotice'] != '') { 
+                              $totalmarks = $totalmarks + 30; ?>
+                              <div style="color:#5bc0de;" class="form-group text-center">
+                                  <i class="fa fa-file fa-3x"></i><br>
+                                  <STRONG>File Subimitted</STRONG><br>
+                                  <a href="<?php echo $row['spdoc_ratenotice'];  ?>">Review File</a>
+                              </div>
+                              <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -991,7 +1103,14 @@
                     <div class="form-group">
                         <label for="vehiclereg" class="col-sm-5 control-label">Vehicle Registration Paper</label>
                         <div class="col-sm-7">
-                            <input type="file" class="form-control" name="spdoc_vehiclereg" id="poib10" />
+                            <?php if($row['spdoc_vehiclereg'] != '') { 
+                              $totalmarks = $totalmarks + 10; ?>
+                              <div style="color:#5bc0de;" class="form-group text-center">
+                                  <i class="fa fa-file fa-3x"></i><br>
+                                  <STRONG>File Subimitted</STRONG><br>
+                                  <a href="<?php echo $row['spdoc_vehiclereg'];  ?>">Review File</a>
+                              </div>
+                              <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -1004,15 +1123,47 @@
                     <div class="form-group">
                         <label for="utility" class="col-sm-5 control-label">Current Electricity/Phone Account</label>
                         <div class="col-sm-7">
-                            <input type="file" class="form-control" name="spdoc_elecorphone" id="poib11" />
+                            <?php if($row['spdoc_elecorphone'] != '') { 
+                              $totalmarks = $totalmarks + 10; ?>
+                              <div style="color:#5bc0de;" class="form-group text-center">
+                                  <i class="fa fa-file fa-3x"></i><br>
+                                  <STRONG>File Subimitted</STRONG><br>
+                                  <a href="<?php echo $row['spdoc_elecorphone'];  ?>">Review File</a>
+                              </div>
+                              <?php } ?>
                         </div>
                     </div>
                 </div>
             </div>
+            <hr>
+            <h3>Customer Has <?php echo $totalmarks; ?> Points</h3>
+            <!-- Progress Logic -->
+            <?php 
+              if($totalmarks >= 100){
+                $val = 100;
+                $class = "progress-bar-success";
+              } else {
+                $val = $totalmarks;
+                if($totalmarks > 50){
+                  $class = "progress-bar-warning";
+                } else{
+                  $class = "progress-bar-danger";
+                }
+              }
+            ?>
+            <div class="progress">
+              <div class="progress-bar <?php echo $class;?>" role="progressbar" aria-valuenow="<?php echo $val;?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $val;?>%;">
+                <?php echo $val;?>%
+              </div>
+            </div>
+            <!-- End of Prog -->
+
+            <?php } ?>
+            <!-- End of files -->
             <div class="form-group">
                     <div>
-                      <button type="submit" class="btn btn-warning">Submit</button>
-                      <button type="reset" class="btn btn-default">Reset</button> 
+                      <a href='<?php echo $baseurl . 'formaction/approve_tenant_action.php?id='. $tappid; ?>'  type="submit" class="btn btn-warning">Approve</a>
+                      <a href='<?php echo $baseurl . 'formaction/reject_tenant_action.php?id='. $tappid; ?>' type="reset" class="btn btn-default">Reject</a> 
                     </div>
                   </div>
         </form>   

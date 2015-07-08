@@ -73,6 +73,36 @@
         <?php include "agent_sidebar.php"; ?>
       </div>
       <div class="col-md-9">
+        <!-- Success Edit Message -->
+          <?php
+            if(isset($_GET["accept"]) && $_GET["accept"] == 'true' ) {
+              //if it is false display error
+               ?>
+
+              <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Success!</strong><?php echo ' Tenant Request Accepted' ; ?> 
+              </div>
+
+            <?php
+            }
+           ?>
+           <!-- Fail Edit Message -->
+          <?php
+            if(isset($_GET["accept"]) && $_GET["accept"] == 'false' ) {
+              //if it is false display error
+               ?>
+
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Error!</strong><?php echo ' Failed to record' ; ?> 
+              </div>
+
+            <?php
+            }
+           ?>
+
+
           <div class="panel panel-default">
           <div class="panel-heading"><h3 class="panel-title">My Property</h3></div>
           <div class="panel-body">
