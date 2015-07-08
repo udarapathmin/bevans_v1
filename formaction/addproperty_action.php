@@ -52,7 +52,7 @@
 	
 
 	//Add Property
-	$sql = "INSERT INTO realestateproperty (propertytype, houseno, street1, street2, suburb, state, postcode, 								ownerfee, rent, bond, bondperiod, downpayment, inspectiontype, smokingallowed, petsallowed, 						furnishedstatus, suitablefor, status, comments, interiorfeatures, exteriorfeatures, otherfeatures) 
+	$sql = "INSERT INTO realestateproperty (propertytype, houseno, street1, street2, suburb, state, postcode, ownerfee, rent, bond, bondperiod, downpayment, inspectiontype, smokingallowed, petsallowed, furnishedstatus, suitablefor, status, comments, interiorfeatures, exteriorfeatures, otherfeatures) 
 					VALUES ('$propertytype', '$houseno', '$street1', '$street2', '$suburb', '$state', '$postcode', '$ownerfee', '$rent', '$bond', '$bondperiod', '$downpayment', '$inspectiontype', '$smokingallowed', '$petsallowed', '$furnishedstatus', '$suitablefor', '$status', '$comments', '$intfeatures', '$extfeatures', '$othrfeatures')";
 
 	if ($conn->query($sql) === TRUE) {

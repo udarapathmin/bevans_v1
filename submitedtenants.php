@@ -10,14 +10,13 @@
   if($_SESSION['user_type'] != 'C'){
     header("location:index.php");
   }
-  
-  $un = $_SESSION['username'];
-  //Selecting Agent ID
 
-    $sql="SELECT * FROM customer WHERE username = '$un'";
-    $result = mysqli_query($conn, $sql);
-    while($row = mysqli_fetch_array($result)){
-        $cusid = $row['customerid'];
+  $un = $_SESSION['username'];
+    // Search for User
+    $sql= "SELECT * FROM customer WHERE username='$un'";
+    $result = $conn->query($sql);
+    while($row = $result->fetch_assoc()) {
+      $customerid = $row["customerid"];
     }
 
 
@@ -29,7 +28,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Customer Requests</title>
+    <title>Tenant Requests</title>
 
     
 
@@ -53,11 +52,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery.dataTables.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css">
-        
-    <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-
   </head>
 
 <body>
@@ -72,15 +66,15 @@
         <?php include "customer_sidebar.php"; ?>
       </div>
       <div class="col-md-9">
-        <!-- Success Edit Message -->
+                  <!-- Success Edit Message -->
           <?php
-            if(isset($_GET["message"]) && $_GET["message"] == 'true' ) {
+            if(isset($_GET["submit"]) && $_GET["submit"] == 'true' ) {
               //if it is false display error
                ?>
 
               <div class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Success!</strong><?php echo ' Message Sent to Customer' ; ?> 
+                <strong>Success!</strong><?php echo ' Tenant Form submitted' ; ?> 
               </div>
 
             <?php
@@ -88,62 +82,63 @@
            ?>
            <!-- Fail Edit Message -->
           <?php
-            if(isset($_GET["message"]) && $_GET["message"] == 'false' ) {
+            if(isset($_GET["submit"]) && $_GET["submit"] == 'false' ) {
               //if it is false display error
                ?>
 
               <div class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Error!</strong><?php echo ' Failed to send message' ; ?> 
+                <strong>Error!</strong><?php echo ' Failed to submit record' ; ?> 
               </div>
 
             <?php
             }
            ?>
-        <div class="panel panel-default">
-          <div class="panel-heading">Customer Requests</div>
-          <div class="panel-body">
-            <script type="text/javascript">
-                    $(document).ready(function() {
-                        $('#example').DataTable();
-                    } );
-                </script>
-                <table id="example" class="table table-hover">
+           <!-- List of submitted tenants -->
+           <div class="panel panel-default">
+            <div class="panel-heading">Submitted Tenant Requests</div>
+            <div class="panel-body">
+             <table id="example" class="table table-hover">
                         <thead>
                         <tr>
                             <th>#</th>
                             <th>Property ID</th>
-                            <th>Agent</th>
-                            <th>Subject</th>
-                            <th>Timestamp</th>
+                            <th>Street</th>
+                            <th>State</th>
+                            <th>Suburb</th>
+                            <th>Postcode</th>
                             <th>Status</th>
-                            <th>View</th>
+                            <th>View Property</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
-                        $sql= "SELECT cs.id,a.firstname, cs.propertyid, cs.subject, cs.timestamp, cs.status FROM customer_askmore cs, agent a WHERE cutomerid ='$cusid' 
-                               AND a.agentid = cs.agentid ORDER BY cs.timestamp desc";
+                        $sql="SELECT t.propertyid,t.status,r.street1,r.suburb,r.postcode,r.state FROM tenant t, realestateproperty r WHERE customerid = '$customerid' AND r.propertyid = t.propertyid";
                         $result = mysqli_query($conn, $sql);
-                        $no = 1;
+                        $no=1;
                         while($row = mysqli_fetch_array($result)){
-
                             echo "<tr>" . PHP_EOL;
                             echo "<th scope='row'>".$no."</th>" . PHP_EOL;
                             echo "<td>".$row['propertyid']."</td>" . PHP_EOL;
-                            echo "<td>".$row['firstname']."</td>" . PHP_EOL;
-                            echo "<td>".$row['subject']."</td>" . PHP_EOL;
-                            echo "<td>".$row['timestamp']."</td>" . PHP_EOL;
+                            echo "<td>".$row['street1']."</td>" . PHP_EOL;
+                            echo "<td>".$row['state']."</td>" . PHP_EOL;
+                            echo "<td>".$row['suburb']."</td>" . PHP_EOL;
+                            echo "<td>".$row['postcode']."</td>" . PHP_EOL;
                             if($row['status'] == '0'){
                               echo "<td><span class='label label-primary'>Pending</span></td>" . PHP_EOL;
-                            } else {
-                              echo "<td><span class='label label-success'>Replied</span></td>" . PHP_EOL;
+                            } 
+                            if($row['status'] == '1'){
+                              echo "<td><span class='label label-success'>Accepted</span></td>" . PHP_EOL;
+                            } 
+                            if($row['status'] == '2'){
+                              echo "<td><span class='label label-danger'>Rejected</span></td>" . PHP_EOL;
                             }
                             echo "<td>" . PHP_EOL; ?>
-                            <a href='<?php echo $baseurl . 'askmore.php?id='. $row['propertyid'].'&mid='.$row['id']; ?>' class='btn btn-primary btn-xs'><i class="fa fa-eye"></i></a>
+                            <a href='<?php echo $baseurl . 'viewproperty.php?id='. $row['propertyid']; ?>' class='btn btn-primary btn-xs'><i class="fa fa-eye"></i></a>
                         <?php
-                            echo "</td>" . PHP_EOL;
+                            echo "</td>" . PHP_EOL;                          
                             echo "</tr>" . PHP_EOL;
+
                             $no++;
                         }
 
@@ -153,8 +148,9 @@
 
                         </tbody>
                     </table>
+            </div>
           </div>
-        </div>
+          <!-- End of Panel -->
       </div>
     </div>
       

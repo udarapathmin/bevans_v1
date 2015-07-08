@@ -273,15 +273,15 @@
                   <div class="form-group">
                     <label>Subject</label>
                     <input type="hidden" class="form-control" name="messageid" value='<?php echo "$mid"; ?>'>
-                    <input  type="text" class="form-control" name="subject" placeholder="Subject" value='<?php echo "$subject"; ?>'>
+                    <input readonly type="text" class="form-control" name="subject" placeholder="Subject" value='<?php echo "$subject"; ?>'>
                   </div>
                   <div class="form-group">
                     <label>Message</label>
-                    <textarea  type="text" class="form-control" name="message" placeholder="Message" value=''><?php echo "$message"; ?></textarea>
+                    <textarea readonly  type="text" class="form-control" name="message" placeholder="Message" value=''><?php echo "$message"; ?></textarea>
                   </div>
                   <div class="form-group">
                     <label>Reply</label>
-                    <textarea type="text" class="form-control" name="reply" placeholder="Reply" value=''><?php echo "$reply"; ?></textarea>
+                    <textarea readonly type="text" class="form-control" name="reply" placeholder="Reply" value=''><?php echo "$reply"; ?></textarea>
                   </div>
                   <!-- <button type="submit" class="btn btn-primary">Ask</button> -->
                 <!-- </form> -->
