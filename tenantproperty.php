@@ -56,7 +56,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Tenant Property</title>
+    <title>Maintenance Requests</title>
 
     
 
@@ -100,13 +100,13 @@
       <div class="col-md-9">
       <!-- Error Message -->
       <?php
-            if(isset($_GET["error"]) && $_GET["error"] == 'true' ) {
+            if(isset($_GET["report"]) && $_GET["report"] == 'fail' ) {
               //if it is false display error
                ?>
 
               <div class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Error!</strong><?php echo ' You cannot set previous dates. Please Select Valid Dates' ; ?> 
+                <strong>Error!</strong><?php echo ' Fail to submit the request' ; ?> 
               </div>
 
             <?php
@@ -115,13 +115,13 @@
 
            <!-- Success Message -->
            <?php
-            if(isset($_GET["success"]) && $_GET["success"] == 'true' ) {
+            if(isset($_GET["report"]) && $_GET["report"] == 'true' ) {
               //if it is false display error
                ?>
 
               <div class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Success!</strong><?php echo ' Agent will confirm your Inspection Timeslot.' ; ?> 
+                <strong>Success!</strong><?php echo ' Request Submitted.' ; ?> 
               </div>
 
             <?php
@@ -267,7 +267,7 @@
                                     <a href='<?php echo $baseurl . "premdefects.php?id=".$propertyid ?>' class="btn btn-primary"><i class="fa fa-level-down"></i> Preliminary Defects</a>
                                   </div>
                                   <div class="form-group">
-                                    <a href='<?php echo $baseurl . "askmore.php?id=".$propertyid ?>' class="btn btn-primary"><i class="fa fa-wrench"></i> Maintenance Request</a>
+                                    <a href='<?php echo $baseurl . "maintenancereq.php?id=".$propertyid ?>' class="btn btn-primary"><i class="fa fa-wrench"></i> Maintenance Request</a>
                                   </div>
                                 </div>
                           </div>

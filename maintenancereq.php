@@ -127,7 +127,7 @@
            ?>
       
           <div class="panel panel-default">
-            <div class="panel-heading">Report Preliminary Defect of this Property</div>
+            <div class="panel-heading">Submit Maintenance Requests for this Property</div>
             <div class="panel-body">
               <?php 
               while($prop = $property->fetch_assoc()) { 
@@ -205,37 +205,50 @@
 
               <?php } ?>
               <hr>
-             <!-- Prem Defects Form -->
-             <h4>Preliminary Defect Report</h4>
-             <div class="col-md-5">
-             <form action="formaction/premdefects_action.php" method="POST" enctype="multipart/form-data">
+             <!-- Maintenance Request Form -->
+             <h4>Maintenance Request</h4>
+             <div class="col-md-6">
+             <form action="formaction/maintenancereq_action.php" method="POST" >
                 <input type="hidden" class="form-control" name="propertyid" value="<?php echo $propertyid; ?>">
                 <input type="hidden" class="form-control" name="agentid" value="<?php echo $agentid; ?>">
                 <input type="hidden" class="form-control" name="customerid" value="<?php echo $customerid; ?>">
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Subject</label>
-                  <input required type="text" class="form-control" name="subject" placeholder="Subject">
+                  <label for="exampleInputEmail1">Type of Repair</label>
                 </div>
+                <div class="form-group">
+                  <label class="checkbox-inline">
+                    <input required type="checkbox" name="type[]" value="Electric"> Electric
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="checkbox" name="type[]" value="Plumb"> Plumb
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="checkbox" name="type[]" value="Carpentry"> Carpentry
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="checkbox" name="type[]" value="Other"> Other
+                  </label>
+                </div>
+
                 <div class="form-group">
                   <label for="exampleInputPassword1">Description</label>
-                  <textarea required class="form-control" name="description" ></textarea>
+                  <textarea required class="form-control" name="details" ></textarea>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputFile">File Attach</label>
-                  <input required type="file" name="image1" accept="image/*">
-                  <p class="help-block">Attach Image proof here.</p>
+                  <label for="exampleInputFile">Gaining entry to the property</label>
+                  <label class="radio-inline">
+                    <input type="radio" name="keyaccess" id="inlineRadio1" value="1"> Allow access with Agency Keys
+                  </label>
+                  <label class="radio-inline">
+                    <input required type="radio" name="keyaccess" id="inlineRadio2" value="2"> Arrange a time
+                  </label>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputFile">File Attach</label>
-                  <input type="file" name="image2" accept="image/*">
-                  <p class="help-block">Attach Image proof here.</p>
+                  <label for="exampleInputPassword1">Special Notes</label>
+                  <textarea  class="form-control" name="specialnotes" ></textarea>
                 </div>
-                <div class="form-group">
-                  <label for="exampleInputFile">File Attach</label>
-                  <input type="file" name="image3" accept="image/*">
-                  <p class="help-block">Attach Image proof here.</p>
-                </div>
+                
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <button type="reset" class="btn btn-default">Reset</button>
               </form>
