@@ -11,7 +11,7 @@
     header("location:index.php");
   }
 
-  $un = $_SESSION['username'];
+    $un = $_SESSION['username'];
     // Search for Agent username and id
     $sql= "SELECT * FROM agent WHERE username='$un'";
     $result = $conn->query($sql);
@@ -27,7 +27,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Tenant Applications</title>
+    <title>Rented Properties</title>
 
     
 
@@ -58,7 +58,6 @@
         
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
-
   </head>
 
 <body>
@@ -73,38 +72,9 @@
         <?php include "agent_sidebar.php"; ?>
       </div>
       <div class="col-md-9">
-        <!-- Success Edit Message -->
-          <?php
-            if(isset($_GET["accept"]) && $_GET["accept"] == 'true' ) {
-              //if it is false display error
-               ?>
 
-              <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Success!</strong><?php echo ' Tenant Request Accepted' ; ?> 
-              </div>
-
-            <?php
-            }
-           ?>
-           <!-- Fail Edit Message -->
-          <?php
-            if(isset($_GET["accept"]) && $_GET["accept"] == 'false' ) {
-              //if it is false display error
-               ?>
-
-              <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Error!</strong><?php echo ' Failed to record' ; ?> 
-              </div>
-
-            <?php
-            }
-           ?>
-
-
-          <div class="panel panel-default">
-          <div class="panel-heading"><h3 class="panel-title">My Property</h3></div>
+        <div class="panel panel-default">
+          <div class="panel-heading"><h3 class="panel-title">Rented Property</h3></div>
           <div class="panel-body">
               <script type="text/javascript">
                     $(document).ready(function() {
@@ -115,33 +85,29 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Property ID</th>
-                            <th>Customer ID</th>
-                            <th>Status</th>
+                            <th>Property Type</th>
+                            <th>Suburb</th>
+                            <th>State</th>
+                            <th>Inspection Type</th>
+                            <th>Rent</th>
                             <th>View</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
-                        $sql="SELECT * FROM tenant WHERE agentid = '$agentid' ORDER BY tappid DESC";
+                        $sql="SELECT * FROM realestateproperty WHERE agentid = '$agentid' AND ownerid !='NULL'";
                         $result = mysqli_query($conn, $sql);
                         while($row = mysqli_fetch_array($result)){
 
                             echo "<tr>" . PHP_EOL;
-                            echo "<th scope='row'>".$row['tappid']."</th>" . PHP_EOL;
-                            echo "<td>".$row['propertyid']."</td>" . PHP_EOL;
-                            echo "<td>".$row['customerid']."</td>" . PHP_EOL;
-                            if($row['status'] == '0'){
-                              echo "<td><span class='label label-primary'>Pending</span></td>" . PHP_EOL;
-                            } 
-                            if($row['status'] == '1') {
-                              echo "<td><span class='label label-success'>Approved</span></td>" . PHP_EOL;
-                            }
-                            if($row['status'] == '2') {
-                              echo "<td><span class='label label-danger'>Rejected</span></td>" . PHP_EOL;
-                            }
+                            echo "<th scope='row'>".$row['propertyid']."</th>" . PHP_EOL;
+                            echo "<td>".$row['propertytype']."</td>" . PHP_EOL;
+                            echo "<td>".$row['suburb']."</td>" . PHP_EOL;
+                            echo "<td>".$row['state']."</td>" . PHP_EOL;
+                            echo "<td>".$row['inspectiontype']."</td>" . PHP_EOL;
+                            echo "<td>".$row['rent']."</td>" . PHP_EOL;
                             echo "<td>" . PHP_EOL; ?>
-                            <a href='<?php echo $baseurl . 'viewtenant.php?id='. $row['tappid']; ?>' class='btn btn-primary btn-xs'><i class="fa fa-eye"></i></a>
+                            <a href='<?php echo $baseurl . 'agentproperty.php?id='. $row['propertyid']; ?>' class='btn btn-primary btn-xs'><i class="fa fa-eye"></i></a>
                         <?php
                             echo "</td>" . PHP_EOL;
                             echo "</tr>" . PHP_EOL;
@@ -155,6 +121,7 @@
                     </table>
           </div>
         </div>
+
       </div>
     </div>
       

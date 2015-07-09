@@ -12,6 +12,7 @@
     <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading1" aria-expanded="true">
         <ul class="list-group">
           <li class="list-group-item"><a href='<?php echo $baseurl . "listagentproperty.php" ?>'>My Property</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "agentcustomerproperty.php" ?>'>Property on Rent</a></li>
           <li class="list-group-item"><a href='<?php echo $baseurl . "agenttenant.php" ?>'>Tenant Applications</a></li>
         </ul>
       </div>

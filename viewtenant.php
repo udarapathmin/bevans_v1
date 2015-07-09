@@ -1160,10 +1160,10 @@
 
             <?php } ?>
             <!-- End of files -->
-            <div class="form-group">
+                  <div class="form-group">
                     <div>
-                      <a href='<?php echo $baseurl . 'formaction/approve_tenant_action.php?id='. $tappid; ?>'  type="submit" class="btn btn-warning">Approve</a>
-                      <a href='<?php echo $baseurl . 'formaction/reject_tenant_action.php?id='. $tappid; ?>' type="reset" class="btn btn-default">Reject</a> 
+                      <a onclick="return confirm('Are you sure you want to Accept this application by this user?');" href='<?php echo $baseurl . 'formaction/approve_tenant_action.php?id='. $tappid; ?>'  type="submit" class="btn btn-warning">Approve</a>
+                      <a onclick="return confirm('Are you sure you want to permenantly reject this users tenant application?   you cannot recover this action after you complete');" href='<?php echo $baseurl . 'formaction/reject_tenant_action.php?id='. $tappid; ?>' type="reset" class="btn btn-default">Reject</a> 
                     </div>
                   </div>
         </form>   

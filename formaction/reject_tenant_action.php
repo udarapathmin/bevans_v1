@@ -25,26 +25,16 @@
 
   }
 
-  //Reject all other Tenant applications
-  $sql = "UPDATE tenant SET status='2' WHERE propertyid='$propertyid' ";
-  $conn->query($sql);
 
-  $sql = "UPDATE tenant SET status='1' WHERE tappid='$id' ";
+  $sql = "UPDATE tenant SET status='2' WHERE tappid='$id' ";
 
 	if ($conn->query($sql) === TRUE) {
-		//Update Customer ID to Tenant
-		$sql = "UPDATE customer SET istenant='1' WHERE customerid='$customerid' ";
-  		$conn->query($sql);
 
-		//Update PRoperty ID to customer
-		$sql = "UPDATE realestateproperty SET ownerid='$customerid', status='0' WHERE propertyid='$propertyid' ";
-  		$conn->query($sql);
-
-		die(header("location:../agenttenant.php?accept=true"));
+		die(header("location:../agenttenant.php?reject=true"));
 
 	} else {
 		//Insert to users table fail
-		die(header("location:../agenttenant.php?accept=false"));
+		die(header("location:../agenttenant.php?reject=false"));
 	}
 
 ?>
