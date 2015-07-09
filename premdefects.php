@@ -16,7 +16,6 @@
   $un = $_SESSION['username'];
 
 
-
   //Selecting Agent ID
   if($utype =='C'){
     $sql="SELECT * FROM customer WHERE username = '$un'";
@@ -32,17 +31,16 @@
   else
     header("location:customer.php");
 
-
- //Validate for correct tenant
+   //Validate for correct tenant
   $sql="SELECT * FROM realestateproperty WHERE propertyid='$propertyid'";
   $result = mysqli_query($conn, $sql);
   while($row = mysqli_fetch_array($result)){
       $owner = $row['ownerid'];
+      $agentid = $row['agentid'];
   }
 
   if($customerid != $owner )
     header("location:customer.php");
-
 
   // Search for House
   $sql= "SELECT * FROM realestateproperty WHERE propertyid='$propertyid'";
@@ -56,7 +54,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Tenant Property</title>
+    <title>Report Preliminary Defects</title>
 
     
 
@@ -129,7 +127,7 @@
            ?>
       
           <div class="panel panel-default">
-            <div class="panel-heading">My Property</div>
+            <div class="panel-heading">Report Preliminary Defect of this Property</div>
             <div class="panel-body">
               <?php 
               while($prop = $property->fetch_assoc()) { 
@@ -207,80 +205,43 @@
 
               <?php } ?>
               <hr>
-              <!-- Cusomer Details -->
-                        <?php 
-                            
-                            $sql= "SELECT * FROM agent WHERE agentid='$agentid'";
-                            $agent = $conn->query($sql);
-                            while($ele = $agent->fetch_assoc()) {
+             <!-- Prem Defects Form -->
+             <div class="col-md-5">
+             <form action="formaction/premdefects_action.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" class="form-control" name="propertyid" value="<?php echo $propertyid; ?>">
+                <input type="hidden" class="form-control" name="agentid" value="<?php echo $agentid; ?>">
+                <input type="hidden" class="form-control" name="customerid" value="<?php echo $customerid; ?>">
 
-                        ?>
-                    <div>
-                        <div class="row" style="margin-top:10px; margin-bottom:20px;">
-                          <div class="col-md-1"></div>
-                          <div class="col-md-2"><b>Name</b></div>
-                          <div class="col-md-8"><?php echo $ele["firstname"]. " " .$ele["lastname"]; ?></div>
-                        </div>
-                        <div class="row" style="margin-top:10px; margin-bottom:20px;">
-                          <div class="col-md-1"></div>
-                          <div class="col-md-2"><b>Phone</b></div>
-                          <div class="col-md-8"><?php echo $ele["phonemobile"]; ?></div>
-                        </div>
-                        <div class="row" style="margin-top:10px; margin-bottom:20px;">
-                          <div class="col-md-1"></div>
-                          <div class="col-md-2"><b>Email</b></div>
-                          <div class="col-md-8"><?php echo $ele["email"]; ?></div>
-                        </div>
-                      </div>
-                      <?php }  ?>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Subject</label>
+                  <input required type="text" class="form-control" name="subject" placeholder="Subject">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Description</label>
+                  <textarea required class="form-control" name="description" ></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputFile">File Attach</label>
+                  <input required type="file" name="image1" accept="image/*">
+                  <p class="help-block">Attach Image proof here.</p>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputFile">File Attach</label>
+                  <input type="file" name="image2" accept="image/*">
+                  <p class="help-block">Attach Image proof here.</p>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputFile">File Attach</label>
+                  <input type="file" name="image3" accept="image/*">
+                  <p class="help-block">Attach Image proof here.</p>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-primary">Reset</button>
+              </form>
+             </div>
 
-                      <!-- Customer Actions -->
-                      <div>
-                        <h3>Manage this Property</h3><hr>
-
-                        <div>
-
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs" role="tablist">
-                          <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Submit</a></li>
-                          <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Notices</a></li>
-                          <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Ask</a></li>
-                          <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Payments</a></li>
-                        </ul>
-
-                        <!-- Tab panes -->
-                        <div class="tab-content" style="margin-top:15px; margin-left:20px;">
-                          <!-- Requests -->
-                          <div role="tabpanel" class="tab-pane active" id="home">
-                                <div class="form-inline">
-                                <!-- Pet App Button -->
-                                  <?php if($petapp) { ?>
-                                  <div class="form-group">
-                                    <a href='<?php echo $baseurl . "askmore.php?id=".$propertyid ?>' class="btn btn-primary"><i class="fa fa-smile-o"></i> Pet Application</a>
-                                  </div>
-                                  <?php } ?>
-                                  <!-- End of Pet App button -->
-                                  <div class="form-group">
-                                    <a href='<?php echo $baseurl . "askmore.php?id=".$propertyid ?>' class="btn btn-primary"><i class="fa fa-life-ring"></i> Content Insurance</a>
-                                  </div>
-                                  <div class="form-group">
-                                    <a href='<?php echo $baseurl . "premdefects.php?id=".$propertyid ?>' class="btn btn-primary"><i class="fa fa-level-down"></i> Preliminary Defects</a>
-                                  </div>
-                                  <div class="form-group">
-                                    <a href='<?php echo $baseurl . "askmore.php?id=".$propertyid ?>' class="btn btn-primary"><i class="fa fa-wrench"></i> Maintenance Request</a>
-                                  </div>
-                                </div>
-                          </div>
-                          <!-- End of Requests -->
-                          <div role="tabpanel" class="tab-pane" id="profile">test 2</div>
-                          <div role="tabpanel" class="tab-pane" id="messages">test 3</div>
-                          <div role="tabpanel" class="tab-pane" id="settings">test 4</div>
-                        </div>
-
-                      </div>
-                        
-                      </div>
-                      <!-- End of Customer Actions -->
+                      
+                   
 
                       
 

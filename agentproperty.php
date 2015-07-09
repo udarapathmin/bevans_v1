@@ -4,10 +4,6 @@
 
   $utype = $_SESSION['user_type'];
 
-  if (!isset($_GET["id"]) && !isset($_GET["agid"]))
-  {
-      header("location:index.php");
-  }
   if (!isset($_SESSION['username']))
   {
       header("location:login.php");
@@ -31,6 +27,17 @@
 
   //property id and agent id
   $propertyid = $_GET["id"];
+
+   //Validate for correct agent
+  $sql="SELECT * FROM realestateproperty WHERE propertyid='$propertyid'";
+  $result = mysqli_query($conn, $sql);
+  while($row = mysqli_fetch_array($result)){
+      $agent = $row['agentid'];
+  }
+
+  if($agid != $agent )
+    header("location:customer.php");
+
 
 
   // Search for House
