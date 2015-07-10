@@ -114,7 +114,7 @@
                         </thead>
                         <tbody>
                         <?php
-                        $sql="SELECT * FROM realestateproperty WHERE status = '1'";
+                        $sql="SELECT * FROM realestateproperty WHERE status = '1' AND agentid !=''";
                         $result = mysqli_query($conn, $sql);
                         while($row = mysqli_fetch_array($result)){
 

@@ -66,6 +66,12 @@
         <?php include "customer_sidebar.php"; ?>
       </div>
       <div class="col-md-9">
+          <?php 
+                while($row = $result->fetch_assoc()) {
+                    echo "string";
+
+                }
+              ?>
 
               <?php 
                 while($row = $result->fetch_assoc()) {
