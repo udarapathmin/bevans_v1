@@ -111,21 +111,94 @@
             <div class="panel-body">
               <!-- Items -->
               <div class="row">
+              <!-- Item 1 -->
+              <?php
+                $sl="SELECT * FROM realestateproperty WHERE  agentid IS NOT NULL AND status='1' ORDER BY RAND() LIMIT 0,1";
+                $prop = mysqli_query($conn, $sl);
+                while($r = mysqli_fetch_array($prop)){
 
+                  $propertyid = $r['propertyid']; 
+
+                  $sql= "SELECT * FROM property_image WHERE propertyid='$propertyid' LIMIT 1";
+                  $images = $conn->query($sql);
+                  while($obj = $images->fetch_assoc()) {
+              ?>
                 <div class="col-md-4 text-center">
-                  <h4></h4>
-                  <img src='' style="width:180px; height:180px; " >
-                  <a style="margin-top:5px;" href='' class="btn btn-success"><i class="fa fa-building"></i> View Property</a>
+                  <h4><?php echo $r['suburb']; ?></h4>
+                  <img src='<?php echo $baseurl."image.php?id=".$obj['id']; ?>' style="width:180px; height:190px; " >
+                  <a style="margin-top:5px;" href='<?php echo $baseurl."viewproperty.php?id=".$propertyid; ?>' class="btn btn-success"><i class="fa fa-building"></i> View Property</a>
                 </div>
-                
+                <?php } } ?>
+
+                <!-- Item 2 -->
+              <?php
+                $sl="SELECT * FROM realestateproperty WHERE  agentid IS NOT NULL AND status='1' ORDER BY RAND() LIMIT 0,1";
+                $prop = mysqli_query($conn, $sl);
+                while($r = mysqli_fetch_array($prop)){
+
+                  $propertyid = $r['propertyid']; 
+
+                  $sql= "SELECT * FROM property_image WHERE propertyid='$propertyid'  LIMIT 1";
+                  $images = $conn->query($sql);
+                  while($obj = $images->fetch_assoc()) {
+              ?>
+                <div class="col-md-4 text-center">
+                  <h4><?php echo $r['suburb']; ?></h4>
+                  <img src='<?php echo $baseurl."image.php?id=".$obj['id']; ?>' style="width:180px; height:190px; " >
+                  <a style="margin-top:5px;" href='<?php echo $baseurl."viewproperty.php?id=".$propertyid; ?>' class="btn btn-success"><i class="fa fa-building"></i> View Property</a>
+                </div>
+                <?php } } ?>
+
+                <!-- Item 3 -->
+              <?php
+                $sl="SELECT * FROM realestateproperty WHERE  agentid IS NOT NULL AND status='1' ORDER BY RAND() LIMIT 0,1";
+                $prop = mysqli_query($conn, $sl);
+                while($r = mysqli_fetch_array($prop)){
+
+                  $propertyid = $r['propertyid']; 
+
+                  $sql= "SELECT * FROM property_image WHERE propertyid='$propertyid' LIMIT 1";
+                  $images = $conn->query($sql);
+                  while($obj = $images->fetch_assoc()) {
+              ?>
+                <div class="col-md-4 text-center">
+                  <h4><?php echo $r['suburb']; ?></h4>
+                  <img src='<?php echo $baseurl."image.php?id=".$obj['id']; ?>' style="width:180px; height:190px; " >
+                  <a style="margin-top:5px;" href='<?php echo $baseurl."viewproperty.php?id=".$propertyid; ?>' class="btn btn-success"><i class="fa fa-building"></i> View Property</a>
+                </div>
+                <?php } } ?>
               </div>
             </div>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="panel panel-default">
-            <div class="panel-body">
-              Search
+          <div class="row">
+            <div class="panel panel-default">
+              <div class="panel-body">
+              <form action="search.php">
+                <div class="form-group">
+                <label for="exampleInputEmail1">Search</label>
+                    <input class="form-control" name="search" placeholder="State, Suburb, Postcode, Street" name="search" type="text">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="panel panel-default">
+              <div class="panel-body">
+              <label for="exampleInputEmail1">Catch us on Social</label>
+              <div class="text-center center-block">
+
+                  <a href="https://www.facebook.com/"><i id="social" class="fa fa-facebook-square fa-5x social-fb"></i></a>
+                <a href="https://twitter.com/"><i id="social" class="fa fa-twitter-square fa-5x social-tw"></i></a>
+                <a href="https://plus.google.com/"><i id="social" class="fa fa-google-plus-square fa-5x social-gp"></i></a>
+                <a href="mailto:isuru@gmail.com"><i id="social" class="fa fa-envelope-square fa-5x social-em"></i></a>
+                </div>
+                </div>
             </div>
           </div>
         </div>

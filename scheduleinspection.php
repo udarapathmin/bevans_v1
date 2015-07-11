@@ -133,6 +133,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">Schedule House Inspection</div>
             <div class="panel-body">
+            <!-- Property Details -->
               <?php 
               while($row = $result->fetch_assoc()) { ?>
 
@@ -188,6 +189,8 @@
               <!-- Div for Customer.. -->
               <?php 
                 if($utype == 'C') {
+
+                  // Check if the customer has saved for previous schedules
 
                   $sqli="SELECT * FROM customer_scheduleinspection WHERE customerid = '$cusid' AND propertyid='$propertyid'";
                   $results = mysqli_query($conn, $sqli);

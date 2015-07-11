@@ -11,6 +11,16 @@
     header("location:index.php");
   }
 
+    //Get username
+    $un = $_SESSION['username'];
+
+    //Select Agent id
+    $sql="SELECT * FROM agent WHERE username = '$un'";
+    $result = mysqli_query($conn, $sql);
+    while($row = mysqli_fetch_array($result)){
+        $agentid = $row['agentid'];
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,6 +67,64 @@
         <?php include "agent_sidebar.php"; ?>
       </div>
       <div class="col-md-9">
+
+        <h3>Agent Dashboard</h3><hr>
+
+
+      <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <ul  class=" list-inline mrg-0 btm-mrg-10 clr-535353">
+            <li style="margin-right:35px;">
+            <i class=" dashb fa fa-file-code-o fa-5x text-cemter"></i>
+            <p class="text-cemter"><a href="agenttenant.php"> Tenant Applications</a></p>
+            </li>
+            <li style="margin-right:35px;">
+            <i class=" dashb fa fa-building fa-5x text-cemter"></i>
+            <p class="text-cemter"><a href="agentcustomerproperty.php"> Property on Rent</a></p>
+            </li>
+            <li>
+            <i class=" dashb fa fa-building-o fa-5x text-cemter"></i>
+            <p class="text-cemter"><a href="listagentproperty.php"> My Property</a></p>
+            </li>
+        </ul>
+      </div>
+      </div>
+
+      <h4>Pending Payment Requests</h4><hr>
+      <div class="row">
+
+      <?php
+        //Get Property Details
+        $sql= "SELECT count(*) as count FROM tenant_payments WHERE agentid='$agentid' AND status ='0'";
+        $result_property = $conn->query($sql);
+        $count =0;
+        while($row = $result_property->fetch_assoc()) {
+          $count = $row["count"];
+        }
+      ?>
+
+      <div class="col-md-2"></div>
+      <div class="col-md-8"><h1><?php echo $count; ?></h1></div>
+      </div>
+
+      <h4><a href="scheduleapplications.php"> Ispection Schedule Requests</a></h4><hr>
+      <div class="row">
+
+      <?php
+        //Get Property Details
+        $sql= "SELECT count(*) as count FROM customer_scheduleinspection WHERE agentid='$agentid' AND agentreply ='0'";
+        $result_property = $conn->query($sql);
+        $count =0;
+        while($row = $result_property->fetch_assoc()) {
+          $count = $row["count"];
+        }
+      ?>
+
+      <div class="col-md-2"></div>
+      <div class="col-md-8"><h1><?php echo $count; ?></h1></div>
+      </div>
+
 
       </div>
     </div>

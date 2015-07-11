@@ -1,5 +1,5 @@
 <?php 
-
+error_reporting(0);
     include "database.php";
   
     //property id
@@ -18,13 +18,30 @@
 
   if (!isset($_SESSION['username']))
   {
-      header("location:login.php");
+      $guest = true;
+  } else{
+    $guest = false;
   }
 
-  // //check for Admin login
-  // if($_SESSION['user_type'] != 'A'){
-  //   header("location:index.php");
-  // }
+    if($utype == 'C'){
+    //Save Property
+    $un = $_SESSION['username'];
+    // Search for Agent username and id
+    $sql= "SELECT * FROM customer WHERE username='$un'";
+    $customerrest = $conn->query($sql);
+    while($cust = $customerrest->fetch_assoc()) {
+      $customerid = $cust['customerid'];
+    }
+
+  $sql="SELECT * FROM customer_save WHERE customerid = '$customerid' AND propertyid='$id'";
+  $searchres = mysqli_query($conn, $sql);
+  if($searchres->num_rows == 0){
+    $savebutton = true;
+  } else {
+    $savebutton = false;
+  }
+
+}
 
 ?>
 <!DOCTYPE html>
@@ -92,6 +109,20 @@
 
       ?>
 
+      <?php
+            if($guest == true ) {
+              //if it is false display error
+               ?>
+
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Error!</strong><?php echo ' Please Register on our System' ; ?> 
+              </div>
+
+            <?php
+            }
+           ?>
+
       <!-- Special View for Admin to Assign Agents -->
       <?php
         if($_SESSION['user_type'] == 'A' && !isset($row["agentid"])){ ?>
@@ -144,6 +175,16 @@
       <?php
         }
       ?>
+
+      <!-- Customer Save button -->
+      <?php 
+        if($_SESSION['user_type'] == 'C' && $savebutton == true){ ?>
+        <h4>Do you Like this Property? You can Save it here.</h4>
+            <div class="form-group">
+              <a href='<?php echo $baseurl . "formaction/save_search_action.php?id=".$pid ?>' class="btn btn-success"><i class="fa fa-save"></i> Save</a>
+            </div>
+        <hr>
+        <?php } ?>
 
       <!-- Success Edit Message -->
           <?php

@@ -84,6 +84,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css">
+        
+    <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
+
   </head>
 
 <body>
@@ -128,6 +134,36 @@
               <div class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Success!</strong><?php echo ' You have finished setting up this property on rent.' ; ?> 
+              </div>
+
+            <?php
+            }
+           ?>
+
+           <!-- Success Message -->
+           <?php
+            if(isset($_GET["payment"]) && $_GET["payment"] == 'accept' ) {
+              //if it is false display error
+               ?>
+
+              <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Success!</strong><?php echo ' Payment Accepted.' ; ?> 
+              </div>
+
+            <?php
+            }
+           ?>
+
+           <!-- Success Message -->
+           <?php
+            if(isset($_GET["payment"]) && $_GET["payment"] == 'reject' ) {
+              //if it is false display error
+               ?>
+
+              <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Success!</strong><?php echo ' Payment Rejected.' ; ?> 
               </div>
 
             <?php
@@ -297,8 +333,137 @@
                                 Display Schedules
                           </div>
                           <!-- Requests tab -->
-                          <div role="tabpanel" class="tab-pane" id="messages">test 3</div>
-                          <div role="tabpanel" class="tab-pane" id="settings">test 4</div>
+                          <div role="tabpanel" class="tab-pane" id="messages">
+                            <!-- Preliminary Defects  -->
+                            <h4>Preliminary Defects</h4>
+                              <div>
+                                <?php
+                                  $sql= "SELECT * FROM preliminary_defects WHERE propertyid='$propertyid' AND agentid = '$agid' AND status = '0' ";
+                                  $defects_results = $conn->query($sql);
+                                  $no = 0;
+                                  while($def = $defects_results->fetch_assoc()) {
+                                    $no++;
+                                    $defid = $def['id'];
+                                ?>
+                                    <div class="well">
+                                      <div class="media">
+                                        
+                                      <div class="media-body">
+                                        <h4 class="media-heading"><?php echo $def['subject']; ?></h4>
+                                        <div class="text-right"><a style="margin-top:5px;" href='<?php echo $baseurl."formaction/prem_def_archive.php?id=".$defid. "&pid=".$propertyid; ?>' class="btn btn-sm btn-success"><i class="fa fa-flag"></i> Archive</a></div>
+                                          <p><?php echo $def['description']; ?></p>
+                                          <ul class="list-inline list-unstyled">
+                                        <li><span><i class="glyphicon glyphicon-calendar"></i> <?php echo $def['timestamp']; ?> </span></li>
+                                                                                        
+                                      </ul>
+                                      
+                                      <div class="row">
+                                      <?php if(!empty($def['image1'])) { ?>
+                                        <img class="media-object" style="width:150px; height:150px;" src='<?php echo $baseurl . "otherimage.php?id=".$defid."&tbl=preliminary_defects&col=image1" ?>'>
+                                      <?php } ?>
+                                      <?php if(!empty($def['image2'])) { ?>
+                                        <img class="media-object" style="width:150px; height:150px;" src='<?php echo $baseurl . "otherimage.php?id=".$defid."&tbl=preliminary_defects&col=image2" ?>'>
+                                      <?php } ?>
+                                      <?php if(!empty($def['image3'])) { ?>  
+                                        <img class="media-object" style="width:150px; height:150px;" src='<?php echo $baseurl . "otherimage.php?id=".$defid."&tbl=preliminary_defects&col=image3" ?>'>
+                                      <?php } ?> 
+                                      </div>
+                                       </div>
+                                    </div>
+                                  </div>
+                                <?php } ?>
+                              </div>
+                              <hr>
+                              <h4> Maintenance Requests</h4>
+                              <div>
+                                <?php
+                                  $sql= "SELECT * FROM maintenance_requests WHERE propertyid='$propertyid' AND agentid = '$agid' AND status = '0' ";
+                                  $defects_results = $conn->query($sql);
+                                  $no = 0;
+                                  while($def = $defects_results->fetch_assoc()) {
+                                    $no++;
+                                    $defid = $def['id'];
+                                ?>
+                                    <div class="well">
+                                      <div class="media">
+                                        
+                                      <div class="media-body">
+                                        <div class="text-right"><a style="margin-top:5px;" href='<?php echo $baseurl."formaction/maintreq_archive.php?id=".$defid. "&pid=".$propertyid; ?>' class="btn btn-sm btn-success"><i class="fa fa-flag"></i> Archive</a></div>
+                                        <h4 class="media-heading"><?php echo $def['type']; ?></h4>
+                                          <p><?php echo $def['details']; ?></p>
+                                          <ul class="list-inline list-unstyled">
+                                        <li><span><i class="glyphicon glyphicon-calendar"></i> <?php echo $def['timestamp']; ?> </span></li>
+                                            <li>|</li> 
+                                            <?php
+                                              if( $def['keyaccess'] == '1')
+                                                echo "<li><i class='fa fa-key'></i> Access using Agent Key</li>";
+                                              else
+                                                echo "<li><i class='fa fa-clock-o'>Schedule a time</li>";
+                                            ?>                                            
+                                         </ul>
+                    
+                                       </div>
+                                    </div>
+                                  </div>
+                                <?php } ?>
+                              </div>
+                          </div>
+                          <!-- Payments Tab -->
+                          <div role="tabpanel" class="tab-pane" id="settings">
+                            <div class="row">
+                            
+                            <table id="example" class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>REF#</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Month</th>
+                                        <th>Time</th>
+                                        <th>Status</th>
+                                        <th>Approve</th>
+                                        <th>Reject</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    $sql="SELECT * FROM tenant_payments WHERE agentid='$agid' AND propertyid='$propertyid' ORDER BY timestamp DESC";
+                                    $result = mysqli_query($conn, $sql);
+                                    while($row = mysqli_fetch_array($result)){
+
+                                        echo "<tr>" . PHP_EOL;
+                                        echo "<th scope='row'>".$row['refno']."</th>" . PHP_EOL;
+                                        echo "<td>".$row['date']."</td>" . PHP_EOL;
+                                        echo "<td>".$row['amount']."</td>" . PHP_EOL;
+                                        echo "<td>".$row['month']."</td>" . PHP_EOL;
+                                        echo "<td>".$row['timestamp']."</td>" . PHP_EOL;
+                                        if($row['status'] == '0'){ 
+                                          echo "<td><span class='label label-primary'>Pending</span></td>". PHP_EOL;
+                                          echo "<td>" . PHP_EOL; ?>
+                                        <a href='<?php echo $baseurl . 'formaction/payment_ack.php?t=A&id='. $row['id'].'&pid='. $propertyid; ?>' class='btn btn-success btn-xs'><i class="fa fa-check"></i></a>
+                                    <?php
+                                        echo "</td>" . PHP_EOL;
+                                        echo "<td>" . PHP_EOL; ?>
+                                        <a href='<?php echo $baseurl . 'formaction/payment_ack.php?t=R&id='. $row['id'].'&pid='. $propertyid; ?>' class='btn btn-danger btn-xs'><i class="fa fa-close"></i></a>
+                                    <?php
+                                        echo "</td>" . PHP_EOL;
+                                        } else if($row['status'] == '1'){
+                                          echo "<td><span class='label label-success'>Received</span></td>". PHP_EOL;
+                                        } else{
+                                          echo "<td><span class='label label-danger'>Rejected</span></td>". PHP_EOL;
+                                        }
+                                        
+                                        echo "</tr>" . PHP_EOL;
+                                    }
+
+                                    ?>
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                          </div>
                         </div>
 
                       </div>

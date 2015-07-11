@@ -80,6 +80,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+        <!-- DataTables Plugin -->
+    <script src="js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css">
+        
+    <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
   </head>
 
 <body>
@@ -274,7 +280,98 @@
                           <!-- End of Requests -->
                           <div role="tabpanel" class="tab-pane" id="profile">test 2</div>
                           <div role="tabpanel" class="tab-pane" id="messages">test 3</div>
-                          <div role="tabpanel" class="tab-pane" id="settings">test 4</div>
+                          <!-- Payments -->
+                          <div role="tabpanel" class="tab-pane" id="settings">
+                            <!-- Update Payments -->
+                            <div class="row">
+                            <div class="col-md-6">
+                              <form action="formaction/tenant_payments_action.php" method="POST">
+                              <input required type="hidden" class="form-control" name="propertyid" value="<?php echo $propertyid; ?>" placeholder="Reference ID">
+                              <input required type="hidden" class="form-control" name="agentid" value="<?php echo $agentid; ?>" placeholder="Reference ID">
+                              <input required type="hidden" class="form-control" name="customerid" value="<?php echo $customerid; ?>" placeholder="Reference ID">
+                                <div class="form-group">
+                                  <label>Reference ID</label>
+                                  <input required type="text" class="form-control" name="refno" placeholder="Reference ID">
+                                </div>
+                                <div class="form-group">
+                                  <label>Date</label>
+                                  <input required type="date" class="form-control" name="date" placeholder="Reference ID">
+                                </div>
+                                <div class="form-group">
+                                  <label>Amount</label>
+                                  <input required type="number" class="form-control" name="amount" placeholder="Amount">
+                                </div>
+                                <div class="form-group">
+                                  <label>Month</label>
+                                  <select class="form-control" name="month">
+                                    <option value="January">January</option>
+                                    <option value="February">February</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August">August</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                  </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                              </form>
+                            </div>
+                            </div>
+
+                            <!-- All Payments -->
+                            <div class="row">
+                            <hr>
+                            <script type="text/javascript">
+                                $(document).ready(function() {
+                                    $('#example').DataTable();
+                                } );
+                            </script>
+                            <table id="example" class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>REF#</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Month</th>
+                                        <th>Time</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    $sql="SELECT * FROM tenant_payments WHERE customerid='$customerid' AND propertyid='$propertyid' ORDER BY timestamp DESC";
+                                    $result = mysqli_query($conn, $sql);
+                                    while($row = mysqli_fetch_array($result)){
+
+                                        echo "<tr>" . PHP_EOL;
+                                        echo "<th scope='row'>".$row['refno']."</th>" . PHP_EOL;
+                                        echo "<td>".$row['date']."</td>" . PHP_EOL;
+                                        echo "<td>".$row['amount']."</td>" . PHP_EOL;
+                                        echo "<td>".$row['month']."</td>" . PHP_EOL;
+                                        echo "<td>".$row['timestamp']."</td>" . PHP_EOL;
+                                        if($row['status'] == '0'){ 
+                                          echo "<td><span class='label label-primary'>Pending</span></td>". PHP_EOL;
+                                        } else if($row['agentreply'] == '1'){
+                                          echo "<td><span class='label label-success'>Received</span></td>". PHP_EOL;
+                                        } else{
+                                          echo "<td><span class='label label-danger'>Rejected</span></td>". PHP_EOL;
+                                        }
+                                        echo "</tr>" . PHP_EOL;
+                                    }
+
+                                    ?>
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                          </div>
                         </div>
 
                       </div>

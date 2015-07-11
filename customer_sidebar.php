@@ -1,9 +1,13 @@
 
-<?php include "template/config.php"; ?>
-
 <?php
 
+// include "template/config.php";
+
 include "database.php";
+
+//Base URL Only for this one
+$baseurl = "http://localhost/rental/";
+
 $un = $_SESSION['username'];
 //Validate for correct tenant
   $s="SELECT * FROM customer WHERE username='$un'";
@@ -62,7 +66,7 @@ $un = $_SESSION['username'];
     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
         <ul class="list-group">
           <li class="list-group-item"><a href='<?php echo $baseurl . "advancesearch.php" ?>'>Advance Search</a></li>
-          <li class="list-group-item"><a href='<?php echo $baseurl . ".php" ?>'>Search</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "index.php" ?>'>Search</a></li>
           <li class="list-group-item"><a href='<?php echo $baseurl . "savedsearch.php" ?>'>Saved Search</a></li>
         </ul>
     </div>
@@ -116,7 +120,7 @@ $un = $_SESSION['username'];
     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
         <ul class="list-group">
           <li class="list-group-item"><a href='<?php echo $baseurl . "advancesearch.php" ?>'>Advance Search</a></li>
-          <li class="list-group-item"><a href='<?php echo $baseurl . ".php" ?>'>Search</a></li>
+          <li class="list-group-item"><a href='<?php echo $baseurl . "index.php" ?>'>Search</a></li>
           <li class="list-group-item"><a href='<?php echo $baseurl . "savedsearch.php" ?>'>Saved Search</a></li>
         </ul>
     </div>

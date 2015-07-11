@@ -26,11 +26,11 @@
     	}
     	if($_SESSION['user_type'] == 'A')
     		//redirect for usertype
-			header("location:admin.php");
+			header("location:index.php");
 		if($_SESSION['user_type'] == 'C')
-			header("location:customer.php");
+			header("location:index.php");
 		if($_SESSION['user_type'] == 'K')
-			header("location:agent.php");
+			header("location:index.php");
 	}
 	else {
 		//redirect for error

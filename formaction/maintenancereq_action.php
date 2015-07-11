@@ -19,11 +19,8 @@ include "../database.php";
 		} 
 	}
 
-	echo $typedata;
-
-
 	$sql = "INSERT INTO  maintenance_requests (propertyid, agentid, customerid, type, details, keyaccess, specialnotes) 
-					VALUES ('$propertyid', '$agentid', '$customerid', '$type', '$details', '$keyaccess', '$specialnotes')";
+					VALUES ('$propertyid', '$agentid', '$customerid', '$typedata', '$details', '$keyaccess', '$specialnotes')";
 
 
 

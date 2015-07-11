@@ -57,6 +57,39 @@
         <?php include "admin_sidebar.php"; ?>
       </div>
       <div class="col-md-9">
+      <h3>Admin Dashboard</h3><hr>
+
+
+      <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <ul  class=" list-inline mrg-0 btm-mrg-10 clr-535353">
+            <li style="margin-right:35px;">
+            <i class=" dashb fa fa-users fa-5x text-cemter"></i>
+            <p class="text-cemter"><a href="pendingagents.php"> Pending Agents</a></p>
+            </li>
+            <li style="margin-right:35px;">
+            <i class=" dashb fa fa-building fa-5x text-cemter"></i>
+            <p class="text-cemter"><a href="addproperty.php"> Add Property</a></p>
+            </li>
+            <li>
+            <i class=" dashb fa fa-building-o fa-5x text-cemter"></i>
+            <p class="text-cemter"><a href="listproperty.php"> List Property</a></p>
+            </li>
+        </ul>
+      </div>
+      </div>
+
+      <h4>Admin Reports</h4><hr>
+      <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <p class="text-cemter"><a href="listallproperty.php"> List Property</a></p>
+        <p class="text-cemter"><a href="listcustomer.php"> List Customer</a></p>
+        <p class="text-cemter"><a href="listagents.php"> List Agents</a></p>
+        <p class="text-cemter"><a href="listtenants.php"> List Tenants</a></p>
+      </div>
+      </div>
 
       </div>
     </div>
