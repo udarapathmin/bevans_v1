@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Login</title>
+    <title>Forgot Password</title>
 
     
 
@@ -34,34 +34,51 @@
 <body>
 <div class="container" style="margin-top:10%">
     <div class="">
-      <div class="col-sm-6 col-md-4 col-md-offset-4">
+      <div class="col-md-6 col-md-offset-3">
 
         <?php
-        //checks of login status
-        if(isset($_GET["loginFailed"])) 
-          //if it is false display error
-          if($_GET["loginFailed"] == 'true') {
+        //Message of wrong email
+        if(isset($_GET["email"]) && ($_GET["email"] == 'false')) {
         ?>
          
         <div class="alert alert-danger alert-dismissible" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <strong>Error!</strong><?php echo ' Incorrect Username / Password. Please try again.' ; ?> 
+          <strong>Error!</strong><?php echo ' Email cannot be found in our system. Please try again.' ; ?> 
         </div>
         <?php
          }
         ?> 
+        <?php
+        //success message
+       if(isset($_GET["email"]) && ($_GET["email"] == 'true')) {
+        ?>
+         
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Error!</strong><?php echo ' We sent your Password to your email address.' ; ?> 
+        </div>
+        <?php
+         }
+        ?> 
+
         <div class="panel panel-default">
           <div class="panel-heading">
-            <center><strong>USER LOGIN</strong></center>
+            <center><strong>Recover Password</strong></center>
           </div>
           <div class="panel-body">
           
-            <form role="form" method="post" action="checklogin.php">
+            <form role="form" method="post" action="checkforget.php">
               <fieldset>
               <div class="row">
                   <div class="center-block">
                     <img class="profile-img"
                       src="img/sym.jpg" alt="">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="text-center">
+                    <h3>Recover your Bevans Password</h3>
+                    <p>Insert Email to recover password. Password will be sent to your email address.</p>
                   </div>
                 </div>
                 <div class="row">
@@ -71,23 +88,12 @@
                         <span class="input-group-addon">
                           <i class="glyphicon glyphicon-user"></i>
                         </span> 
-                        <input class="form-control" placeholder="Username" id="username" name="username" type="text" autofocus>
+                        <input class="form-control" placeholder="Email" id="email" name="email" type="text" autofocus>
                       </div>
                     </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <span class="input-group-addon">
-                          <i class="glyphicon glyphicon-lock"></i>
-                        </span>
-                        <input class="form-control" placeholder="Password" id="password" name="password" type="password" value="">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <input type="submit" class="btn btn-lg btn-primary btn-block" value="Sign in">
-                    </div>
-                    <div class="form-group">
-                      <a href="forgot.php" onClick="">Forget Password or Username</a>
 
+                    <div class="form-group">
+                      <input type="submit" class="btn btn-lg btn-primary btn-block" value="Request">
                     </div>
                   </div>
 
@@ -97,9 +103,7 @@
             </form>
 
           </div>
-          <div class="panel-footer ">
-            <a href="signup.php" onClick=""> Create an Account! </a>
-          </div>
+
                 </div>
       </div>
     </div>

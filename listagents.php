@@ -71,7 +71,8 @@
           <div class="panel-body">
               <script type="text/javascript">
                     $(document).ready(function() {
-                        $('#example').DataTable();
+                        // $('#example').DataTable();
+                        console.log("test");
                     } );
                 </script>
                 <table id="example" class="table table-hover">
