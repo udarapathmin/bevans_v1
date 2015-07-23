@@ -66,13 +66,6 @@
         <?php include "customer_sidebar.php"; ?>
       </div>
       <div class="col-md-9">
-          <?php 
-                while($row = $result->fetch_assoc()) {
-                    echo "string";
-
-                }
-              ?>
-
               <?php 
                 while($row = $result->fetch_assoc()) {
                 // $_SESSION['deleteadminid'] = $row["id"];
@@ -89,6 +82,8 @@
 
             <?php
             }
+
+            if($row["istenant"] != "1"){
            ?>
 
 
@@ -148,6 +143,15 @@
             
             <?php
           
+                } else{ ?>
+
+                <div class="alert alert-info alert-dismissible" role="alert">
+                <strong>Notice!</strong>You are currently previlaged as a tenant customer. You can't dissable your profile until you release from our properties. Redirect to my Dashboard <strong><a href='<?php echo $baseurl . "customer.php" ?>'>here</a></strong>.
+              </div>
+
+
+            <?php
+                }
               }
 
             ?>  
